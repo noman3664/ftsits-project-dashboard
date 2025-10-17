@@ -1,0 +1,30 @@
+/* src/styles/Dashboard.css */
+@reference "tailwindcss";
+
+.dashboard-wrapper {
+  @apply flex bg-gray-100 min-h-screen;
+}
+
+.dashboard-main {
+  @apply flex-1 flex flex-col;
+}
+
+.dashboard-content {
+  @apply p-6 overflow-y-auto;
+}
+
+.dashboard-section {
+  @apply space-y-6;
+}
+
+.task-tables {
+  @apply my-6 h-fit;
+}
+
+.summary-grid {
+  @apply grid md:grid-cols-2 gap-6;
+}
+
+.page-text {
+  @apply p-6 text-gray-700 text-lg font-semibold;
+}

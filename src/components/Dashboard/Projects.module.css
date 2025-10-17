@@ -1,0 +1,122 @@
+/* Projects.module.css */
+@reference "tailwindcss";
+.projectsContainer {
+  @apply bg-white;
+}
+
+/* Header */
+.header {
+  @apply bg-[#FFD2CE] p-4 flex justify-between items-center;
+}
+
+.createButton {
+  @apply flex items-center gap-2 bg-[#FFA800]
+  text-white text-sm font-medium px-3 py-2 rounded-sm ;
+}
+
+/* Content */
+.content {
+}
+
+/* Controls Bar */
+.controlsBar {
+  @apply bg-[#FFD2CE] flex justify-between items-center p-4;
+}
+
+.showEntries {
+  @apply flex items-center;
+}
+
+.showLabel {
+  @apply bg-[#F93131] text-white text-sm px-3 py-2 border-0;
+}
+
+.entriesValue {
+  @apply bg-[#FFA800] text-white text-sm px-3 py-2 border-0 outline-none ;
+}
+
+.searchBar {
+  @apply relative flex items-center ;
+}
+
+.searchInput {
+  @apply border border-[#DBDCDE] bg-[#ffffff] rounded-full pl-4 pr-8 py-2 text-sm outline-none;
+}
+
+
+.searchIcon {
+  @apply absolute right-3 text-[#89868D];
+}
+
+/* Table */
+.tableWrapper {
+  @apply bg-white shadow-sm overflow-x-auto;
+}
+
+.table {
+  @apply w-full text-left border-collapse;
+}
+
+.tableHead {
+  @apply bg-[#F6EFFF];
+}
+
+.th {
+  @apply  py-2 px-3 text-sm  text-[#3A3541];
+}
+
+.tableBody {
+  @apply divide-y divide-[#[#F4F5F9]];
+}
+
+.tableRow {
+  @apply border-b border-[#F4F5F9] ;
+}
+
+.td {
+  @apply py-2 px-3 text-sm  text-[#3A3541] bg-[#F4F5F9];
+}
+
+.projectName, .projectDescription {
+  @apply text-[#3A3541];
+}
+
+
+/* Action Buttons */
+.actionButtons {
+  @apply flex gap-2;
+}
+
+.editButton {
+  @apply bg-[#FFA800] cursor-pointer text-white p-2 rounded-sm;
+}
+
+.deleteButton {
+  @apply bg-[#ED1E26] cursor-pointer text-white p-2 rounded-sm;
+}
+
+/* Footer */
+.footer {
+  @apply flex justify-between items-center bg-[#FFF1D4] px-4 py-3 rounded-b-sm;
+}
+
+.footerText {
+  @apply text-sm text-[#3A3541] font-medium;
+}
+
+.pagination {
+  @apply flex;
+}
+
+.paginationButton {
+  @apply bg-[#F93131]  text-white text-sm  px-3 py-1 ;
+}
+
+.paginationActive {
+  @apply bg-[#ED1E26] text-white text-sm  px-3 py-1 ;
+}
+
+/* No Results */
+.noData{
+  @apply  text-center py-4 ;
+}

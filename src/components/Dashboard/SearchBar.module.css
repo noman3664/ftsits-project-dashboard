@@ -1,0 +1,13 @@
+@reference "tailwindcss";
+
+.searchBox {
+  @apply relative flex items-center ;
+}
+
+.searchInput {
+  @apply border border-[#DBDCDE] bg-[#ffffff] rounded-full pl-4 pr-8 py-2 text-sm outline-none;
+}
+
+.searchIcon {
+  @apply absolute right-3 text-[#89868D];
+}

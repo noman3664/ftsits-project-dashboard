@@ -1,0 +1,83 @@
+@reference "tailwindcss";
+
+.wrapper {
+  @apply bg-white shadow-sm rounded-lg m-4 mb-6;
+}
+
+/* Header Section */
+.header {
+  @apply flex justify-between items-center px-4 py-6 rounded-t-lg text-[#3A3541];
+}
+
+.title {
+  @apply font-semibold;
+}
+
+/* Search Box */
+.searchBox {
+  @apply flex items-center bg-white text-[#89868D] rounded-full px-2 py-1 w-60;
+}
+
+.searchInput {
+  @apply w-full px-2 text-sm outline-none bg-transparent;
+}
+
+.table {
+  @apply w-full text-sm border-t border-gray-200 table-fixed;
+}
+
+.thead {
+  @apply bg-[#FFD2CE] text-[#3A3541] px-4 py-3 text-center;
+;
+}
+
+.th {
+}
+
+.td {
+  @apply py-3 px-4 border-b border-gray-200 align-middle ;
+}
+.row {
+  @apply text-center py-2;
+}
+
+
+/* Table Row */
+.row:nth-child(even) {
+  @apply bg-[#F6EFFF];
+}
+
+/* Status Color */
+.statusOpen {
+  @apply text-green-600 font-medium;
+}
+
+/* Action Button */
+.viewBtn {
+  @apply bg-[#FFF1D4] text-[#FFA800] px-3 py-1 rounded-md text-xs font-medium;
+}
+
+/* Footer / Pagination */
+.footer {
+  @apply flex justify-between items-center p-3 text-base bg-[#FFF1D4];
+}
+
+
+.footerText {
+  @apply text-gray-700;
+}
+
+.pagination {
+  @apply flex;
+}
+
+.pageBtnRed {
+  @apply bg-[#F93131] text-white px-3 py-1;
+}
+
+.pageBtnYellow {
+  @apply bg-[#FFA800] text-white px-3;
+}
+.noData {
+  @apply text-center text-gray-500 py-4;
+}

@@ -1,0 +1,166 @@
+/* TaskDetailsView.module.css */
+@reference "tailwindcss";
+
+
+.container {
+  @apply w-full min-h-screen bg-[#FFD2CE] p-6;
+}
+
+/* Header */
+.header {
+  @apply mb-8;
+}
+
+.editButton {
+  @apply bg-[#FFA800] text-white px-2 py-2 rounded-sm text-sm flex items-center gap-2;
+}
+
+.icon {
+  @apply text-sm;
+}
+
+/* Card */
+.card {
+  @apply bg-white rounded-lg shadow-sm mb-6 overflow-hidden m-8 max-w-3xl mx-auto p-8;
+}
+
+.sectionTitle {
+  @apply text-lg font-medium text-[#3A3541] mx-8 my-3;
+}
+
+/* Details Section */
+.detailsContent {
+  @apply mx-8 my-3;
+}
+
+.taskTitle {
+  @apply text-[#777777] font-medium   text-sm mb-3;
+}
+
+.detailRow {
+  @apply text-[#777777] text-sm mb-2;
+}
+
+.statusRow {
+  @apply flex items-center gap-3 mb-4;
+}
+.detailPriority{
+  @apply flex items-center gap-3 mb-4 text-[#000000];
+}
+.statusLabel {
+  @apply text-gray-600 text-sm font-medium;
+}
+
+.statusBadge {
+  @apply bg-[#FFA800] text-white px-4 py-1 rounded text-sm font-medium;
+}
+
+/* Dropdown */
+.dropdownWrapper {
+  @apply relative mb-4;
+}
+
+.dropdown {
+  @apply w-full border border-[#DBDCDE] rounded-lg px-4 py-3 text-[#DBDCDE] outline-none appearance-none;
+}
+
+
+.dropdownIcon {
+  @apply absolute right-4 top-1/2 -translate-y-1/2 text-[#3A3541] pointer-events-none;
+}
+
+/* Buttons */
+.actionButton {
+  @apply bg-[#FFA800] text-white px-4 py-2 rounded-md font-medium mb-4 transition-colors;
+}
+
+.submitButton {
+  @apply bg-[#FFA800] text-white px-4 py-2 rounded-md font-medium mb-6 transition-colors;
+}
+
+/* Textarea */
+.textarea {
+  @apply w-full border border-[#DBDCDE] rounded-lg px-4 py-3 text-[#3A3541] outline-none mb-4 resize-none;
+}
+
+
+/* Attachments */
+.attachmentsSection {
+  @apply mb-6  mx-8 my-3;
+}
+
+.attachmentsTitle {
+  @apply text-sm font-medium text-[#3A3541] mb-4;
+}
+
+.attachmentsList {
+  @apply space-y-3;
+}
+
+.attachmentItem {
+  @apply flex items-center justify-between bg-[#FFF1D4] p-4;
+}
+
+.attachmentInfo {
+  @apply flex-1;
+}
+
+.attachmentName {
+  @apply text-[#ED9D00] font-medium mb-1 text-sm;
+}
+
+.attachmentMeta {
+  @apply text-[#ED9D00] text-xs;
+}
+
+.deleteAttachment {
+  @apply bg-[#F93131] text-white p-2 rounded-sm cursor-pointer text-sm;
+}
+
+
+
+/* Comments Section */
+.commentsContent {
+  @apply px-6 py-4;
+}
+
+.commentTextarea {
+  @apply w-full border border-[#DBDCDE] rounded-lg px-4 py-3 outline-none mb-4 resize-none;
+}
+.commentTextarea::placeholder{
+    @apply text-[#DBDCDE];
+}
+
+/* Upload Area */
+.uploadArea {
+  @apply border-2 border-dashed border-[#F93131] text-[#3A3541] rounded-lg p-6 mb-4 text-center bg-white;
+}
+
+.fileInput {
+  @apply hidden;
+}
+
+.uploadLabel {
+  @apply cursor-pointer flex flex-col items-center gap-1;
+}
+
+.uploadIcon {
+  @apply text-[#F93131] mb-2;
+}
+
+.uploadText {
+  @apply text-[#3A3541] text-sm;
+}
+
+.uploadLink {
+  @apply text-[#F93131] font-medium;
+}
+
+.addCommentButton {
+  @apply bg-[#FFA800] text-white px-6 py-2 rounded-sm ;
+}
+
+/* No Data */
+.noData {
+  @apply mx-8 py-3 text-[#777777];
+}

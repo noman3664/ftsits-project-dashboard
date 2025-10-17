@@ -1,0 +1,171 @@
+@reference "tailwindcss";
+
+.formContainer {
+    @apply bg-[#FFD2CE] w-full min-h-screen;
+}
+
+/* Header */
+.header {
+    @apply flex justify-between items-center p-6;
+}
+
+.editButton {
+    @apply bg-[#FFA800] text-white px-4 py-2 rounded-sm flex items-center justify-between gap-2 text-sm;
+}
+
+.icon {
+    @apply text-sm;
+}
+
+/* Form */
+.form {
+    @apply  rounded-lg shadow-lg m-8 bg-[#FFFFFF] max-w-3xl mx-auto p-8 mb-10;
+}
+
+.inputGroup {
+    @apply relative border-[#DBDCDE] mx-8 my-3 text-sm text-[#DBDCDE]  ;
+}
+
+.inputWrapper {
+    @apply relative flex-1 mx-8 my-3 text-sm ;
+}
+
+.row {
+    @apply flex ;
+}
+
+/* Inputs */
+.input {
+    @apply w-full border border-gray-300 rounded-lg px-4 py-3 text-[#3A3541] text-sm  outline-none transition-all;
+}
+
+
+.input::placeholder {
+    @apply text-[#C9C9C9];
+}
+
+/* Date Input */
+.input[type="date"] {
+    @apply appearance-none;
+}
+
+.input[type="date"]::-webkit-calendar-picker-indicator {
+    @apply opacity-0 absolute;
+}
+
+.calendarIcon {
+    @apply absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 pointer-events-none;
+}
+
+/* Select */
+.select {
+    @apply w-full border border-gray-300 rounded-lg px-4 py-3 text-[#3A3541] outline-none transition-all appearance-none;
+}
+
+.select > option {
+    @apply border-none;
+}
+
+.dropdownIcon {
+    @apply absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 pointer-events-none;
+}
+.statusIcon{
+    @apply absolute right-4 top-1/2 -translate-y-1/2 text-green-500 text-xl;
+
+}
+/* Required and Priority Icons */
+.requiredIcon,
+.priorityIcon {
+    @apply absolute right-4 top-1/2 -translate-y-1/2 text-red-500 text-xl;
+}
+
+/* Textarea */
+.textarea {
+    @apply w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-700 outline-none transition-all resize-none;
+}
+
+
+.textarea::placeholder {
+    @apply text-[#C9C9C9];
+}
+
+/* File Upload Area */
+.uploadArea {
+    @apply relative border-2 border-dashed border-gray-300 rounded-lg mx-8 my-3 text-center bg-white transition-colors;
+}
+
+
+.fileInput {
+    @apply hidden ;
+}
+
+.uploadLabel {
+    @apply cursor-pointer flex flex-col items-center gap-2 py-6;
+}
+
+.uploadIcon {
+    @apply text-[#FFA800] mb-2 ;
+}
+
+.clickText {
+    @apply text-[#FFA800] font-medium ;
+}
+
+.dragText {
+    @apply text-[#3A3541];
+}
+
+.fileTypes {
+    @apply text-[#3A3541] text-sm mt-1;
+}
+
+.fileName {
+    @apply text-sm text-gray-700 mt-2;
+}
+/* Existing Attachments */
+.attachmentsSection {
+  @apply mb-6  mx-8 my-3;
+}
+
+.attachmentsTitle {
+  @apply text-sm font-medium text-[#3A3541] mb-4;
+}
+
+.attachmentsList {
+  @apply space-y-3;
+}
+
+.attachmentItem {
+  @apply flex items-center justify-between bg-[#FFF1D4] p-4;
+}
+
+.attachmentInfo {
+  @apply flex-1;
+}
+
+.attachmentName {
+  @apply text-[#ED9D00] font-medium mb-1 text-sm;
+}
+
+.attachmentMeta {
+  @apply text-[#ED9D00] text-xs;
+}
+
+.deleteAttachment {
+  @apply bg-[#F93131] text-white p-2 rounded-sm cursor-pointer text-sm;
+}
+
+
+
+/* Buttons */
+.buttonGroup {
+    @apply flex gap-4 mx-8 my-3 justify-start;
+}
+
+.cancelButton {
+  @apply bg-[#F93131] text-white px-3 py-1 rounded-sm text-sm ;
+}
+
+.saveButton {
+    @apply bg-[#FFA800] text-white px-3 py-1 rounded-sm text-sm ;
+}

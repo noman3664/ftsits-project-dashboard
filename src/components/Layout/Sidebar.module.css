@@ -1,0 +1,30 @@
+@reference "tailwindcss";
+
+
+.sidebar {
+  @apply w-48 bg-white flex flex-col text-[14.2px];
+}
+
+.sidebarHeader {
+  @apply bg-gradient-to-b from-[#F93131] to-[#FFCB00] w-48 h-fit p-4 flex flex-col;
+}
+
+.logoWrapper {
+  @apply rounded-b-full border-amber-100;
+}
+
+.logo {
+  @apply w-14 mx-auto mb-6;
+}
+
+.nav {
+  @apply space-y-3 text-gray-700 font-medium p-4;
+}
+
+.link {
+  @apply flex items-center gap-3 px-3 py-2 rounded-md hover:text-[#ED1E26];
+}
+
+.linkActive {
+  @apply bg-[#FFD2CE] text-[#ED1E26];
+}

@@ -1,0 +1,43 @@
+@reference "tailwindcss";
+
+.formContainer {
+  @apply h-fit bg-white rounded-lg shadow-sm;
+}
+
+.headerSection {
+  @apply bg-[#FFD2CE] p-4;
+}
+
+.inputField {
+  @apply w-1/4 bg-white rounded-sm px-3 py-2 text-sm outline-none ;
+}
+
+.permissionsHeader {
+  @apply bg-[#FFF1D4]  px-4 py-2  text-[#3A3541] mb-4;
+}
+
+.permissionsGrid {
+  @apply grid grid-cols-4 gap-y-3 gap-x-8 mb-6 px-4;
+}
+
+.permissionItem {
+  @apply flex items-center gap-2 text-sm text-gray-700;
+}
+
+.checkbox {
+  @apply accent-yellow-400;
+}
+
+.buttonGroup {
+  @apply flex gap-2 p-4;
+}
+
+.saveButton {
+  @apply bg-[#FFA800] hover:bg-[#e59700] text-white px-4 py-2 
+  rounded-md text-sm font-medium;
+}
+
+.cancelButton {
+  @apply bg-[#ED1E26] hover:bg-[#d01b21] text-white px-4 py-2 
+  rounded-md text-sm font-medium;
+}

@@ -1,0 +1,74 @@
+@reference "tailwindcss";
+
+/* Wrapper */
+.wrapper {
+  @apply bg-white shadow-sm rounded-lg m-4 mb-6;
+}
+
+/* Header Section */
+.header {
+  @apply flex justify-between items-center px-4 py-2 rounded-t-xl text-[#3A3541];
+}
+
+.title {
+  @apply font-semibold;
+}
+
+/* Search Box */
+.searchBox {
+  @apply flex items-center bg-white text-[#89868D] rounded-full px-2 py-1 w-60;
+}
+
+.searchInput {
+  @apply w-full px-2 text-sm outline-none bg-transparent;
+}
+
+/* Table */
+.table {
+  @apply w-full text-sm border-collapse;
+}
+
+.thead {
+  @apply bg-[#FFD2CE] text-[#3A3541];
+}
+
+.th {
+  @apply py-2 px-4;
+}
+
+.tbody {
+  @apply text-center;
+}
+
+.rowEven {
+  @apply bg-[#F6EFFF];
+}
+
+.rowOdd {
+  @apply bg-[#FFD2CE];
+}
+
+.td {
+  @apply py-2;
+}
+
+/* Footer / Pagination */
+.footer {
+  @apply flex justify-between items-center p-3 text-sm bg-[#FFF1D4];
+}
+
+.footerText {
+  @apply text-gray-700;
+}
+
+.pagination {
+  @apply flex;
+}
+
+.pageBtnRed {
+  @apply bg-[#F93131] text-white px-3 py-1;
+}
+
+.pageBtnYellow {
+  @apply bg-[#FFA800] text-white px-3;
+}

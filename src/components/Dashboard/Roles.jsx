@@ -1,185 +1,203 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Search, Edit, Trash2, Plus } from "lucide-react";
 import styles from "./Roles.module.css";
 import CreateRoleForm from "./CreateRoleForm";
-
-
+import Pagination from "../Dashboard/Pagination";
+import SearchBar from "../Dashboard/SearchBar";
+import EditRoleForm from "./EditRoleForm";
 function Roles() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [showEntries, setShowEntries] = useState(12);
+  // Sample roles data
+  const sampleData = [
+    {
+      id: 1,
+      name: "Admin",
+      permissions: ["Create-Task", "Assign-Task", "Delete-Task"],
+    },
+    {
+      id: 2,
+      name: "Manager",
+      permissions: ["Create-Task", "Assign-Task"],
+    },
+    {
+      id: 3,
+      name: "Employee",
+      permissions: ["Create-Task"],
+    },
+    {
+      id: 4,
+      name: "Supervisor",
+      permissions: ["Create-Task", "Delete-Task"],
+    },
+    {
+      id: 5,
+      name: "Intern",
+      permissions: ["Create-Task"],
+    },
+    {
+      id: 6,
+      name: "Contractor",
+      permissions: ["Assign-Task"],
+    },
+    {
+      id: 7,
+      name: "Consultant",
+      permissions: ["View-Projects"],
+    },
+    {
+      id: 8,
+      name: "Director",
+      permissions: ["Manage-Tasks", "Approve-Reports"],
+    },
+
+  ];
+  const showEntries = 5;
   const [currentPage, setCurrentPage] = useState(1);
+  const [isCreating, setIsCreating] = useState(false);
+  const [rolesData, setRolesData] = useState(sampleData);
+  const [filteredRoles, setFilteredRoles] = useState(rolesData);
+  const [displayedRoles, setDisplayedRoles] = useState([]);
+  const [editedRole, setEditedRole] = useState(null);
 
-const [isCreating, setIsCreating] = useState(false);
-const [rolesData, setRolesData] = useState([
-  {
-    id: 1,
-    name: "Admin",
-    permissions: [
-      "Manage-Project", "Create-Projects", "View-Projects", "Manage-Tasks",
-      "Create-Tasks", "Reassign-Tasks", "View-Tasks", "Update-Own-Task-Status",
-      "Reassign-Own-Task", "Manage-User", "Manage-Roles", "Manage-Permissions"
-    ],
-  },
-  {
-    id: 2,
-    name: "Manager",
-    permissions: [
-      "Manage-Project", "Create-Projects", "View-Projects", "Manage-Tasks",
-      "Create-Tasks", "Reassign-Tasks", "View-Tasks",
-    ],
-  },
-  {
-    id: 3,
-    name: "Member",
-    permissions: [
-      "Manage-Project", "Create-Projects", "View-Projects", "Manage-Tasks",
-      "Create-Tasks", "Reassign-Tasks", "View-Tasks",
-    ],
-  },
-  ...Array.from({ length: 25 }, (_, i) => ({
-    id: i + 4,
-    name: `Role ${i + 4}`,
-    permissions: ["View-Projects", "Manage-Tasks"],
-  })),
-]);
-
-  // Filtered roles by search
-  const filteredRoles = useMemo(() => {
-    return rolesData.filter(
-      (role) =>
-        role.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        role.permissions.some((perm) =>
-          perm.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-    );
-  }, [searchQuery, rolesData]);
 
   // Pagination
   const totalPages = Math.ceil(filteredRoles.length / showEntries);
-  const startIndex = (currentPage - 1) * showEntries;
-  const displayedRoles = filteredRoles.slice(startIndex, startIndex + showEntries);
-  //
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * showEntries;
+    const sliced = filteredRoles.slice(startIndex, startIndex + showEntries);
+    setDisplayedRoles(sliced);
+  }, [filteredRoles, currentPage, showEntries]);
+
   const handleSaveRole = (newRole) => {
-  setRolesData((prev) => [...prev, newRole]);
-  setIsCreating(false); // go back to table view
-};
-
-  const handlePrev = () => {
-    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+    const updated = [...rolesData, newRole];
+    setRolesData(updated);
+    setFilteredRoles(updated); // ensures new role appears in the paginated view
+    setIsCreating(false);
   };
 
-  const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+  const handleDeleteRole = (roleId) => {
+    const updated = rolesData.filter((role) => role.id !== roleId);
+    setRolesData(updated);
+    setFilteredRoles(updated);
+    const newTotalPages = Math.ceil(updated.length / showEntries);
+    if (currentPage > newTotalPages && newTotalPages > 0) {
+      setCurrentPage(newTotalPages);
+    }
   };
 
- return (
-  <div className={styles.permissionsContainer}>
-    {isCreating ? (
-      // Create Role Form
-      <CreateRoleForm
-        onSave={handleSaveRole}
-        onCancel={() => setIsCreating(false)}
-      />
-    ) : (
-      <>
-        {/* Header Section */}
-        <div className={styles.header}>
-          <button
-            className={styles.createButton}
-            onClick={() => setIsCreating(true)}
-          >
-            <Plus size={16} />
-            Create Role
-          </button>
-        </div>
+  const handleEditRole = (role) => {
+    setEditedRole(role); // 👈 Set the selected role
+  };
 
-        {/* Content Section */}
-        <div className={styles.content}>
-          {/* Controls Bar */}
-          <div className={styles.controlsBar}>
-            <div className={styles.showEntries}>
-              <span className={styles.showLabel}>Show Entries</span>
-              <select
-                value={showEntries}
-                onChange={(e) => {
-                  setShowEntries(Number(e.target.value));
-                  setCurrentPage(1);
-                }}
-                className={styles.entriesSelect}
-              >
-                <option value={3}>3</option>
-                <option value={6}>6</option>
-                <option value={9}>9</option>
-                <option value={12}>12</option>
-              </select>
-            </div>
+  const handleUpdateRole = (updatedRole) => {
+    const updatedRoles = rolesData.map((r) =>
+      r.id === updatedRole.id ? updatedRole : r
+    );
+    setRolesData(updatedRoles);
+    setFilteredRoles(updatedRoles);
+    setEditedRole(null); // close edit form
+  };
 
-            <div className={styles.searchBar}>
-              <input
-                type="text"
-                placeholder="Search roles or permissions..."
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className={styles.searchInput}
-              />
-              <Search className={styles.searchIcon} size={18} />
-            </div>
+  return (
+    <div className={styles.permissionsContainer}>
+      {isCreating ? (
+        // Create Role Form
+        <CreateRoleForm
+          onSave={handleSaveRole}
+          onCancel={() => setIsCreating(false)}
+        />
+      ) : editedRole ? (
+        <EditRoleForm
+          roleData={editedRole}
+          onSave={handleUpdateRole}
+          onCancel={() => setEditedRole(null)}
+        />
+      ) : (
+        <>
+          {/* Header Section */}
+          <div className={styles.header}>
+            <button
+              className={styles.createButton}
+              onClick={() => setIsCreating(true)}
+            >
+              <Plus size={16} />
+              Create Role
+            </button>
           </div>
 
-          {/* Table */}
-          <div className={styles.tableWrapper}>
-            <table className={styles.table}>
-              <thead className={styles.tableHead}>
-                <tr>
-                  <th className={styles.th}>Name</th>
-                  <th className={styles.th}>Permissions</th>
-                  <th className={styles.th}>Actions</th>
-                </tr>
-              </thead>
-              <tbody className={styles.tableBody}>
-                {displayedRoles.length > 0 ? (
-                  displayedRoles.map((role) => (
-                    <tr key={role.id} className={styles.tableRow}>
-                      <td className={styles.td}>
-                        <span className={styles.roleName}>{role.name}</span>
-                      </td>
-                      <td className={styles.td}>
-                        <div className={styles.permissionTags}>
-                          {role.permissions.map((permission, index) => (
-                            <span key={index} className={styles.permissionTag}>
-                              {permission}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
-                      <td className={styles.td}>
-                        <div className={styles.actionButtons}>
-                          <button className={styles.editButton}>
-                            <Edit size={16} />
-                          </button>
-                          <button className={styles.deleteButton}>
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
+          {/* Content Section */}
+          <div className={styles.content}>
+            {/* Controls Bar */}
+            <div className={styles.controlsBar}>
+              <div className={styles.showEntries}>
+                <button className={styles.showLabel}>Show Entries</button>
+                <span className={styles.entriesSelect}>{rolesData.length}</span>
+              </div>
+
+              <SearchBar
+                data={rolesData}
+                setFilteredData={setFilteredRoles}
+                searchKeys={["name", "permissions"]}
+              />
+            </div>
+
+            {/* Table */}
+            <div className={styles.tableWrapper}>
+              <table className={styles.table}>
+                <thead className={styles.tableHead}>
+                  <tr>
+                    <th className={styles.th}>Name</th>
+                    <th className={styles.th}>Permissions</th>
+                    <th className={styles.th}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody className={styles.tableBody}>
+                  {displayedRoles.length > 0 ? (
+                    displayedRoles.map((role) => (
+                      <tr key={role.id} className={styles.tableRow}>
+                        <td className={styles.td}>
+                          <span className={styles.roleName}>{role.name}</span>
+                        </td>
+                        <td className={styles.td}>
+                          <div className={styles.permissionTags}>
+                            {role.permissions.map((p, i) => (
+                              <span key={i} className={styles.permissionTag}>
+                                {p}
+                              </span>
+                            ))}
+                          </div>
+                        </td>
+                        <td className={styles.td}>
+                          <div className={styles.actionButtons}>
+                            <button
+                              className={styles.editButton}
+                              onClick={() => handleEditRole(role)}
+                            >
+                              <Edit size={16} />
+                            </button>
+                            <button
+                              className={styles.deleteButton}
+                              onClick={() => handleDeleteRole(role.id)}
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="3" className="text-center py-6 text-gray-500">
+                        No matching roles found
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="3" className="text-center py-6 text-gray-500">
-                      No matching roles found
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-          {/* Footer */}
-          <div className={styles.footer}>
+            {/* Footer */}
+            {/* <div className={styles.footer}>
             <span className={styles.footerText}>
               Showing {startIndex + 1} to{" "}
               {Math.min(startIndex + showEntries, filteredRoles.length)} of{" "}
@@ -206,12 +224,19 @@ const [rolesData, setRolesData] = useState([
                 Next
               </button>
             </div>
+          </div> */}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+              totalItems={filteredRoles.length}
+              displayedItems={displayedRoles.length}
+            />
           </div>
-        </div>
-      </>
-    )}
-  </div>
-);
+        </>
+      )}
+    </div>
+  );
 
 }
 

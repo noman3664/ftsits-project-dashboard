@@ -2,7 +2,15 @@
 
 
 .sidebar {
-  @apply w-48 bg-white flex flex-col text-[14.2px];
+  @apply w-48 bg-white flex flex-col text-sm h-full shadow-md fixed top-0 left-0 transform transition-transform duration-300 z-40 md:translate-x-0;
+}
+
+.sidebarOpen {
+  @apply fixed top-0 left-0 h-full z-50 transform translate-x-0 transition-transform duration-300 ease-in-out;
+}
+
+.sidebarClosed {
+  @apply fixed top-0 -left-48 h-full z-50 transform -translate-x-full transition-transform duration-300 ease-in-out;
 }
 
 .sidebarHeader {
@@ -18,7 +26,7 @@
 }
 
 .nav {
-  @apply space-y-3 text-gray-700 font-medium p-4;
+  @apply space-y-3 text-[#3A3541] font-medium p-4;
 }
 
 .link {
@@ -27,4 +35,8 @@
 
 .linkActive {
   @apply bg-[#FFD2CE] text-[#ED1E26];
+}
+
+.closeBtn{
+  @apply absolute top-4 right-4 text-[#3A3541] text-lg cursor-pointer
 }

@@ -1,0 +1,25 @@
+@reference "tailwindcss";
+
+.container {
+  @apply bg-[#FFD2CE] p-6  ;
+}
+
+.inputWrapper {
+  @apply mb-4;
+}
+
+.input {
+  @apply w-1/4 bg-white rounded-sm px-3 py-2 text-sm outline-none ;
+}
+
+.buttonGroup {
+  @apply flex gap-2;
+}
+
+.saveButton {
+  @apply bg-[#FFA800] text-white px-3 py-1 rounded-sm text-sm ;
+}
+
+.cancelButton {
+  @apply bg-[#F93131]  text-white px-3 py-1 rounded-sm text-sm ;
+}

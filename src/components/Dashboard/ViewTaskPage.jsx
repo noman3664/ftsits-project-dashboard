@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Trash2, Upload, ChevronDown } from "lucide-react";
+import { Trash2, Upload, ChevronDown, ArrowLeft } from "lucide-react";
 import styles from "./ViewTaskPage.module.css";
-function ViewTaskPage() {
+function ViewTaskPage({ onClose }) {
     const [comment, setComment] = useState("");
     // const [selectedFile, setSelectedFile] = useState(null);
 
@@ -33,13 +33,15 @@ function ViewTaskPage() {
         }
     };
 
+
+
     return (
         <div className={styles.container}>
             {/* Edit Task Button */}
             <div className={styles.header}>
-                <button className={styles.editButton}>
-                    <span className={styles.icon}>≡</span>
-                    Edit Task
+                <button className={styles.editButton} onClick={onClose}>
+                    <ArrowLeft size={16} />
+                    Tasks
                 </button>
             </div>
 

@@ -9,9 +9,18 @@ import Permissions from '../components/Dashboard/Permissions';
 import Tasks from '../components/Dashboard/Tasks';
 import Projects from '../components/Dashboard/Projects';
 import TaskReport from '../components/Dashboard/TaskReport';
+import PieChart from '../components/Dashboard/PieChart';
+import TotalTask from '../components/Dashboard/TotalTask';
 import './Dashboard.css';
 function Dashboard() {
-    const [active, setActive] = useState('Dashboard'); // Sidebar selection
+    
+    const [active, setActive] = useState('Dashboard');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen((prev) => !prev);
+    };
+
 
     const renderContent = () => {
         switch (active) {
@@ -19,6 +28,17 @@ function Dashboard() {
                 return (
                     <div className="dashboard-section">
                         <StatsCards />
+                        <div className="summary-grid">
+                            <TotalTask title="Number of Tasks" bgColor="bg-[#FFD2CE]" />
+                            <PieChart
+                                data={[
+                                    { name: "Open Task", value: 30 },
+                                    { name: "In Progress", value: 40 },
+                                    { name: "Over Due", value: 20 },
+                                    { name: "Closed Task", value: 10 },
+                                ]}
+                            />
+                        </div>
                         <div className="task-tables">
                             <TaskTable title="Recent Tasks" bgColor="bg-[#FFD2CE]" />
                             <TaskTable title="Over Tasks" bgColor="bg-[#FFD2CE]" />
@@ -55,9 +75,21 @@ function Dashboard() {
 
     return (
         <div className="dashboard-wrapper">
-            <Sidebar active={active} setActive={setActive} />
+            <Sidebar
+                active={active}
+                setActive={setActive}
+                isOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+            />
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+                    onClick={toggleSidebar}
+                ></div>
+            )}
+
             <div className="dashboard-main">
-                <Navbar />
+                <Navbar toggleSidebar={toggleSidebar} />
                 <main className="dashboard-content">{renderContent()}</main>
             </div>
         </div>

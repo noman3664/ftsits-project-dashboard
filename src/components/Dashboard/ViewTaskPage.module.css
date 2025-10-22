@@ -12,7 +12,7 @@
 }
 
 .editButton {
-  @apply bg-[#FFA800] text-white px-2 py-2 rounded-sm text-sm flex items-center gap-2;
+  @apply bg-[#FFA800] text-white px-2 py-2 rounded-sm text-sm flex items-center gap-2 cursor-pointer;
 }
 
 .icon {

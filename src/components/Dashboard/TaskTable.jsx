@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import SearchBar from "./SearchBar";
+import Pagination from "./Pagination";
 import styles from "./TaskTable.module.css";
 
 const TaskTable = ({ title, bgColor }) => {
@@ -8,6 +9,9 @@ const TaskTable = ({ title, bgColor }) => {
     { id: 2, title: "Backend Task", status: "Closed", date: "2025/10/02", project: "Backend", assignedTo: "User2" },
     { id: 3, title: "UI Design", status: "In Progress", date: "2025/09/28", project: "Design", assignedTo: "User3" },
     { id: 4, title: "Testing", status: "Open", date: "2025/09/30", project: "QA", assignedTo: "User4" },
+    { id: 5, title: "Bug Fix", status: "Closed", date: "2025/10/01", project: "Backend", assignedTo: "User2" },
+    { id: 6, title: "Feature Development", status: "Open", date: "2025/10/05", project: "Frontend", assignedTo: "User5" },
+    { id: 7, title: "Code Review", status: "In Progress", date: "2025/10/03", project: "QA", assignedTo: "User5" }
   ];
 
   const [filteredTasks, setFilteredTasks] = useState(tasks);
@@ -21,8 +25,8 @@ const TaskTable = ({ title, bgColor }) => {
     [filteredTasks, startIndex, showEntries]
   );
 
-  const handlePrev = () => setCurrentPage((p) => Math.max(p - 1, 1));
-  const handleNext = () => setCurrentPage((p) => Math.min(p + 1, totalPages));
+  // const handlePrev = () => setCurrentPage((p) => Math.max(p - 1, 1));
+  // const handleNext = () => setCurrentPage((p) => Math.min(p + 1, totalPages));
 
   return (
     <div className={styles.wrapper}>
@@ -85,7 +89,7 @@ const TaskTable = ({ title, bgColor }) => {
       </table>
 
       {/* Footer */}
-      <div className={styles.footer}>
+      {/* <div className={styles.footer}>
         <p>
           Showing {startIndex + 1} to{" "}
           {Math.min(startIndex + showEntries, filteredTasks.length)} of{" "}
@@ -104,7 +108,14 @@ const TaskTable = ({ title, bgColor }) => {
             Next
           </button>
         </div>
-      </div>
+      </div> */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+        totalItems={filteredTasks.length}
+        displayedItems={displayedTasks.length}
+      />
     </div>
   );
 };

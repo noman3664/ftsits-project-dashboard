@@ -2,7 +2,7 @@
 @reference "tailwindcss";
 
 .dashboard-wrapper {
-  @apply flex bg-gray-100 min-h-screen;
+  @apply flex bg-[#F7F8FB] min-h-screen;
 }
 
 .dashboard-main {

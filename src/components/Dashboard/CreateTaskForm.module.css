@@ -1,7 +1,7 @@
 @reference "tailwindcss";
 
 .formContainer {
-    @apply bg-[#FFD2CE] w-full min-h-screen;
+    @apply bg-[#FFD2CE] w-full ;
 }
 
 /* Header */
@@ -36,7 +36,7 @@
 
 /* Inputs */
 .input {
-    @apply w-full border border-gray-300 rounded-lg px-4 py-3 text-[#3A3541] outline-none transition-all;
+    @apply w-full border border-gray-300 rounded-lg px-4 py-3 text-[#3A3541] outline-none transition-all cursor-pointer;
 }
 
 
@@ -45,13 +45,13 @@
 }
 
 /* Date Input */
-.input[type="date"] {
-    @apply appearance-none;
+ .input[type="date"] {
+    @apply appearance-none ;
 }
 
 .input[type="date"]::-webkit-calendar-picker-indicator {
-    @apply opacity-0 absolute;
-}
+    @apply cursor-pointer;
+} 
 
 .calendarIcon {
     @apply absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 pointer-events-none;
@@ -118,6 +118,39 @@
 
 .fileName {
     @apply text-sm text-gray-700 mt-2;
+}
+
+/* Existing Attachments */
+.attachmentsSection {
+  @apply mb-6  mx-8 my-3;
+}
+
+.attachmentsTitle {
+  @apply text-sm font-medium text-[#3A3541] mb-4;
+}
+
+.attachmentsList {
+  @apply space-y-3;
+}
+
+.attachmentItem {
+  @apply flex items-center justify-between bg-[#FFF1D4] p-4;
+}
+
+.attachmentInfo {
+  @apply flex-1;
+}
+
+.attachmentName {
+  @apply text-[#ED9D00] font-medium mb-1 text-sm;
+}
+
+.attachmentMeta {
+  @apply text-[#ED9D00] text-xs;
+}
+
+.deleteAttachment {
+  @apply bg-[#F93131] text-white p-2 rounded-sm cursor-pointer text-sm;
 }
 
 /* Buttons */

@@ -32,7 +32,7 @@
 }
 
 .entriesSelect {
-  @apply bg-[#FFA800] text-white px-3 py-1.5 text-sm  border-none outline-none cursor-pointer;
+  @apply bg-[#FFA800] text-white px-3 py-1.5 text-sm  border-none outline-none;
 }
 
 .searchBar {
@@ -98,11 +98,11 @@
 }
 
 .editButton {
-  @apply bg-[#FFA800] text-white p-2 rounded-sm ;
+  @apply bg-[#FFA800] text-white p-2 rounded-sm  cursor-pointer ;
 }
 
 .deleteButton {
-  @apply bg-[#F93131] text-white p-2 rounded-sm ;
+  @apply bg-[#F93131] text-white p-2 rounded-sm  cursor-pointer ;
 }
 
 /* Footer */

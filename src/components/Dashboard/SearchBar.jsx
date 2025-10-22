@@ -1,3 +1,4 @@
+// src/components/SearchBar.jsx
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import styles from "./SearchBar.module.css";

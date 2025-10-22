@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import styles from "./CreatePermissionForm.module.css";
+import styles from "./EditProjectForm.module.css";
 
-export default function CreatePermissionForm({ onCancel, onSave }) {
-  const [permissionName, setPermissionName] = useState("");
+export default function EditProjectForm({ projectData, onSave, onCancel }) {
+  const [name, setName] = useState(projectData.name);
+  const [description, setDescription] = useState(projectData.description);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!permissionName.trim()) return;
-    onSave({ name: permissionName.trim() });
-    setPermissionName("");
+    onSave({ id: projectData.id, name, description });
   };
 
   return (
@@ -17,16 +16,23 @@ export default function CreatePermissionForm({ onCancel, onSave }) {
         <div className={styles.inputWrapper}>
           <input
             type="text"
-            value={permissionName}
-            onChange={(e) => setPermissionName(e.target.value)}
-            placeholder="Enter Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter Project Name..."
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             className={styles.input}
           />
         </div>
 
         <div className={styles.buttonGroup}>
           <button type="submit" className={styles.saveButton}>
-            Save
+            Update
           </button>
           <button
             type="button"

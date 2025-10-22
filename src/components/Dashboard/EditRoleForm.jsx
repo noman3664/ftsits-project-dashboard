@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import styles from "./CreateRoleForm.module.css";
+import styles from "./EditRoleForm.module.css";
 
-export default function CreateRoleForm({ onSave, onCancel }) {
-  // Dummy permissions list
+export default function EditRoleForm({ roleData, onSave, onCancel }) {
+  const [roleName, setRoleName] = useState(roleData.name);
+  const [selectedPermissions, setSelectedPermissions] = useState(roleData.permissions);
+
+  // Sample list of all permissions to display
   const permissions = [
     "Create-Task",
     "Assign-Task",
@@ -10,43 +13,27 @@ export default function CreateRoleForm({ onSave, onCancel }) {
     "View-Projects",
     "Manage-Tasks",
     "Approve-Reports",
-    "Edit-Settings",
-    "Access-Analytics",
-    "Manage-Users",
-    "Export-Data",
   ];
 
-  const [roleName, setRoleName] = useState("");
-  const [selectedPermissions, setSelectedPermissions] = useState([]);
-
-  // Toggle permission checkbox
-  const handlePermissionChange = (permission) => {
+  const handlePermissionChange = (perm) => {
     setSelectedPermissions((prev) =>
-      prev.includes(permission)
-        ? prev.filter((p) => p !== permission)
-        : [...prev, permission]
+      prev.includes(perm)
+        ? prev.filter((p) => p !== perm)
+        : [...prev, perm]
     );
   };
 
-  // Handle save
   const handleSave = () => {
-    if (!roleName.trim()) {
-      alert("Please enter a role name.");
-      return;
-    }
-
-    const newRole = {
-      id: Date.now(),
-      name: roleName.trim(),
+    const updatedRole = {
+      ...roleData,
+      name: roleName,
       permissions: selectedPermissions,
     };
-
-    onSave(newRole);
+    onSave(updatedRole);
   };
 
   return (
     <div className={styles.formContainer}>
-      {/* Header Section */}
       <div className={styles.headerSection}>
         <input
           type="text"
@@ -57,10 +44,8 @@ export default function CreateRoleForm({ onSave, onCancel }) {
         />
       </div>
 
-      {/* Permissions Title */}
-      <div className={styles.permissionsHeader}>Permissions</div>
+      <div className={styles.permissionsHeader}>Roles</div>
 
-      {/* Permissions Grid */}
       <div className={styles.permissionsGrid}>
         {permissions.map((perm, index) => (
           <label key={index} className={styles.permissionItem}>
@@ -75,10 +60,9 @@ export default function CreateRoleForm({ onSave, onCancel }) {
         ))}
       </div>
 
-      {/* Buttons */}
       <div className={styles.buttonGroup}>
         <button onClick={handleSave} className={styles.saveButton}>
-          Save
+          Update
         </button>
         <button onClick={onCancel} className={styles.cancelButton}>
           Cancel

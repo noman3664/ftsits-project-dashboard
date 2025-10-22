@@ -1,8 +1,10 @@
-import { FaSearch, FaChevronDown, FaUserEdit, FaPlusCircle, FaTasks, FaClipboardList, FaClock, FaSignOutAlt, FaChartBar } from "react-icons/fa";
+import { FaSearch,FaBars, FaChevronDown, FaUserEdit, FaPlusCircle, FaTasks, FaClipboardList, FaClock, FaSignOutAlt, FaChartBar } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
+import SearchBar from "../Dashboard/SearchBar";
 import styles from "./Navbar.module.css";
 
-export default function Navbar() {
+export default function Navbar({toggleSidebar}) {
+  
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
   const dropdownRef = useRef(null);
@@ -41,16 +43,20 @@ export default function Navbar() {
   ];
   return (
     <div className={styles.navbar}>
+      <button className={`${styles.menuBtn}`} onClick={toggleSidebar}>
+        <FaBars />
+      </button>
       <h1 className={styles.title}>Dashboard</h1>
 
-      <div className={styles.searchWrapper}>
+        <SearchBar />
+      {/* <div className={styles.searchWrapper}>
         <input
           type="text"
           placeholder="Search anything here..."
           className={styles.searchInput}
         />
         <FaSearch className={styles.searchIcon} />
-      </div>
+      </div> */}
 
       <div 
         className={styles.profileSection} 

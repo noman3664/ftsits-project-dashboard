@@ -1,0 +1,21 @@
+@reference "tailwindcss";
+
+.footer {
+  @apply flex justify-between items-center p-3 text-sm bg-[#FFF1D4];
+}
+
+.footerText {
+  @apply text-gray-700;
+}
+
+.pagination {
+  @apply flex;
+}
+
+.pageBtnRed {
+  @apply bg-[#F93131] text-white px-3 py-1;
+}
+
+.pageBtnYellow {
+  @apply bg-[#FFA800] text-white px-3;
+}

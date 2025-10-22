@@ -1,50 +1,115 @@
-import React, { useState, useMemo } from "react";
-import { Search, Edit, Trash2, Plus } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Edit, Trash2, Plus } from "lucide-react";
 import styles from "./Projects.module.css";
-
+import CreateProjectForm from "./CreateProjectForm";
+import SearchBar from "./SearchBar";
+import EditProjectForm from "./EditProjectForm";
 function Projects() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const showEntries = 12;
-  const [projects, setProjects] = useState([
+  const initialProjectsData = [
     {
       id: 1,
-      name: "Frontend Task 1",
-      description: "All Frontend Task Here",
+      name: "Project Alpha",
+      description: "Description for Project Alpha",
     },
-  ]);
+    {
+      id: 2,
+      name: "Project Beta",
+      description: "Description for Project Beta",
+    },
+    {
+      id: 3,
+      name: "Project Gamma",
+      description: "Description for Project Gamma",
+    }
+  ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isCreating, setIsCreating] = useState(false);
+  const [projectsData, setProjectsData] = useState(initialProjectsData);
+  const [filteredProjects, setFilteredProjects] = useState(projectsData);
+  const [editedProject, setEditedProject] = useState(null);
+  const showEntries = 12;
 
-  // Filtered projects by search
-  const filteredProjects = useMemo(() => {
-    return projects.filter(
-      (project) =>
-        project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [searchQuery, projects]);
+
+
+  useEffect(() => {
+    setFilteredProjects(projectsData);
+  }, [projectsData]);
 
   // Pagination
   const totalPages = Math.ceil(filteredProjects.length / showEntries);
   const startIndex = (currentPage - 1) * showEntries;
-  const displayedProjects = filteredProjects.slice(startIndex, startIndex + showEntries);
+  const displayedProjects = filteredProjects.slice(
+    startIndex,
+    startIndex + showEntries
+  );
 
-  const handlePrev = () => {
-    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
-  };
+  const handlePrev = () => currentPage > 1 && setCurrentPage((p) => p - 1);
+  const handleNext = () => currentPage < totalPages && setCurrentPage((p) => p + 1);
 
   const handleDeleteProject = (projectId) => {
-    setProjects(projects.filter((project) => project.id !== projectId));
+    setProjectsData(projectsData.filter((project) => project.id !== projectId));
   };
+
+  const handleSaveProject = (newProject) => {
+    setProjectsData((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: newProject.name,
+        description: newProject.description,
+      },
+    ]);
+    setIsCreating(false);
+  };
+
+  const handleEditProject = (project) => {
+    setEditedProject(project);
+    setIsCreating(false);
+  };
+
+  const handleUpdateProject = (updatedProject) => {
+    const updated = projectsData.map((project) =>
+      project.id === updatedProject.id ? updatedProject : project
+    );
+    setProjectsData(updated);
+    setEditedProject(null);
+  };
+  const handleCancelEdit = () => {
+    setEditedProject(null);
+  };
+
+if (editedProject) {
+    return (
+      <div className={styles.projectsContainer}>
+        <EditProjectForm 
+          projectData={editedProject}
+          onSave={handleUpdateProject}
+          onCancel={handleCancelEdit}
+        />
+      </div>
+    );
+  }
+
+
+  if (isCreating) {
+    return (
+      <div className={styles.projectsContainer}>
+        <CreateProjectForm
+          onSave={handleSaveProject}
+          onCancel={() => setIsCreating(false)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.projectsContainer}>
       {/* Header Section */}
       <div className={styles.header}>
-        <button className={styles.createButton}>
+        <button
+          className={styles.createButton}
+          onClick={() => setIsCreating(true)}
+        >
           <Plus size={16} />
           New Project
         </button>
@@ -55,23 +120,15 @@ function Projects() {
         {/* Controls Bar */}
         <div className={styles.controlsBar}>
           <div className={styles.showEntries}>
-            <span className={styles.showLabel}>Show Entries</span>
-            <span className={styles.entriesValue}>12</span>
+            <button className={styles.showLabel}>Show Entries</button>
+            <span className={styles.entriesValue}>{projectsData.length}</span>
           </div>
 
-          <div className={styles.searchBar}>
-            <input
-              type="text"
-              placeholder="Search anything here..."
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setCurrentPage(1);
-              }}
-              className={styles.searchInput}
-            />
-            <Search className={styles.searchIcon} size={18} />
-          </div>
+          <SearchBar
+            data={projectsData}
+            setFilteredData={setFilteredProjects}
+            searchKeys={["name", "description"]}
+          />
         </div>
 
         {/* Table */}
@@ -92,14 +149,16 @@ function Projects() {
                       <span className={styles.projectName}>{project.name}</span>
                     </td>
                     <td className={styles.td}>
-                      <span className={styles.projectDescription}>{project.description}</span>
+                      <span className={styles.projectDescription}>
+                        {project.description}
+                      </span>
                     </td>
                     <td className={styles.td}>
                       <div className={styles.actionButtons}>
-                        <button className={styles.editButton}>
+                        <button className={styles.editButton} onClick={() => handleEditProject(project)}>
                           <Edit size={14} />
                         </button>
-                        <button 
+                        <button
                           className={styles.deleteButton}
                           onClick={() => handleDeleteProject(project.id)}
                         >
@@ -123,7 +182,8 @@ function Projects() {
         {/* Footer */}
         <div className={styles.footer}>
           <span className={styles.footerText}>
-            Showing {startIndex + 1} to {Math.min(startIndex + showEntries, filteredProjects.length)} Entries
+            Showing {startIndex + 1} to{" "}
+            {Math.min(startIndex + showEntries, filteredProjects.length)} Entries
           </span>
           <div className={styles.pagination}>
             <button
@@ -133,7 +193,9 @@ function Projects() {
             >
               Previous
             </button>
-            <button className={`${styles.paginationButton} ${styles.paginationActive}`}>
+            <button
+              className={`${styles.paginationButton} ${styles.paginationActive}`}
+            >
               {currentPage}
             </button>
             <button

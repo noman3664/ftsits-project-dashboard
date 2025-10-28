@@ -7,6 +7,8 @@ import SearchBar from "./SearchBar";
 import EditPermissions from "./EditPermissions";
 
 export default function Permissions() {
+      console.log("Dashboard Permissions component rendered"); // Debug log
+
   const initialPermissionsData = [
     { name: "Create-Task" },
     { name: "Assign-Task" },
@@ -66,7 +68,7 @@ export default function Permissions() {
   return (
     <div className={styles.container}>
       {/* Header Section */}
-      {!isCreating && (
+      {!isCreating && !editedPermission && (
         <div className={styles.header}>
           <button onClick={() => setIsCreating(true)} className={styles.createButton}>
             <Plus size={16} />

@@ -13,9 +13,9 @@
 }
 
 .pageBtnRed {
-  @apply bg-[#F93131] text-white px-3 py-1;
+  @apply bg-[#F93131] text-white px-3 py-1  cursor-pointer;
 }
 
 .pageBtnYellow {
-  @apply bg-[#FFA800] text-white px-3;
+  @apply bg-[#FFA800] text-white px-3 ;
 }

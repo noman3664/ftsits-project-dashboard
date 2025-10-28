@@ -13,13 +13,16 @@ function CreateProjectForm({ onSave, onCancel }) {
 
     return (
         <div className={styles.container}>
-            <form onSubmit={handleSubmit}>
+            <div className={styles.header}>
+                <button className={styles.createButton}>Create Project</button>
+            </div>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.inputWrapper}>
                     <input
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Enter Project Name..."
+                        placeholder="Enter Name ...."
                         className={styles.input}
                     />
                 </div>
@@ -28,7 +31,7 @@ function CreateProjectForm({ onSave, onCancel }) {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Enter Description..."
-                        className={styles.input}
+                        className={styles.inputTextarea}
                     />
                 </div>
 

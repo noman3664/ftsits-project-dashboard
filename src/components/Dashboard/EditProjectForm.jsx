@@ -12,7 +12,10 @@ export default function EditProjectForm({ projectData, onSave, onCancel }) {
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit}>
+      <div className={styles.header}>
+        <button className={styles.createButton}>Edit Project</button>
+      </div>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputWrapper}>
           <input
             type="text"
@@ -26,7 +29,7 @@ export default function EditProjectForm({ projectData, onSave, onCancel }) {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className={styles.input}
+            className={styles.inputTextarea}
           />
         </div>
 

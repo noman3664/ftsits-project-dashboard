@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Calendar, ChevronDown, Upload, X } from "lucide-react";
+import { Calendar, ChevronDown, CircleDot, Upload, X } from "lucide-react";
 import styles from "./CreateTaskForm.module.css";
 
 function CreateTaskForm({ onClose, onSave }) {
@@ -79,7 +79,8 @@ function CreateTaskForm({ onClose, onSave }) {
             onChange={handleChange}
             className={styles.input}
           />
-          <span className={styles.requiredIcon}>⊗</span>
+          {/* <span className={styles.requiredIcon}>⊗</span> */}
+          <CircleDot className={styles.requiredIcon} size={18} />
         </div>
 
         {/* Date and Due Date */}
@@ -117,7 +118,8 @@ function CreateTaskForm({ onClose, onSave }) {
               onChange={handleChange}
               className={styles.input}
             />
-            <span className={styles.priorityIcon}>⊗</span>
+            {/* <span className={styles.priorityIcon}>⊗</span> */}
+                      <CircleDot className={styles.requiredIcon} size={18} />
           </div>
           <div className={styles.inputWrapper}>
             <select

@@ -6,6 +6,8 @@ import Pagination from "../Dashboard/Pagination";
 import SearchBar from "../Dashboard/SearchBar";
 import EditRoleForm from "./EditRoleForm";
 function Roles() {
+    console.log("Dashboard Roles component rendered"); // Debug log
+
   // Sample roles data
   const sampleData = [
     {

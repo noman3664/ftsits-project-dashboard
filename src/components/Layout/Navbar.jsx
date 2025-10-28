@@ -41,6 +41,14 @@ export default function Navbar({toggleSidebar}) {
     { label: "Daily Logs", icon: <FaChartBar /> },
     { label: "Clock In", icon: <FaClock /> },
   ];
+  const handleLogout = () => {
+    console.log("Logging out...");
+    // Add your logout logic here
+    // Use localStorage (or sessionStorage) instead of undefined userStorage
+    localStorage.clear();
+    window.location.href = "/";
+  }
+
   return (
     <div className={styles.navbar}>
       <button className={`${styles.menuBtn}`} onClick={toggleSidebar}>
@@ -91,7 +99,7 @@ export default function Navbar({toggleSidebar}) {
             ))}
             <hr className={styles.divider} />
             <div 
-              className={`${styles.dropdownItem} ${styles.logout}`} >
+              className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout} >
               <span className={styles.menuIcon}><FaSignOutAlt /></span>
               Logout
             </div>

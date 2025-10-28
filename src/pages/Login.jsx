@@ -1,8 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import logo from '../assets/logo.png';
 import styles from './Login.module.css';
 
 function Login() {
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Add your authentication logic here
+        // For now, just navigate to dashboard
+        navigate('/dashboard');
+    };
+
     return (
         <div className={styles.loginContainer}>
             {/* Background Circles */}
@@ -21,7 +31,7 @@ function Login() {
                     How do I get started lorem ipsum dolor sit?
                 </p>
 
-                <form className={styles.loginForm}>
+                <form className={styles.loginForm} onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>
                             Email
@@ -30,6 +40,7 @@ function Login() {
                             type="email"
                             placeholder="Enter your email"
                             className={styles.formInput}
+                            required
                         />
                     </div>
                     <div className={styles.formGroup}>
@@ -40,6 +51,7 @@ function Login() {
                             type="password"
                             placeholder="********"
                             className={styles.formInput}
+                            required
                         />
                     </div>
                     <button

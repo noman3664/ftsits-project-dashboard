@@ -1,15 +1,27 @@
 @reference "tailwindcss";
 
 .container {
-  @apply bg-[#FFD2CE] p-6  ;
+    @apply bg-[#FFD2CE] p-6  min-h-screen  ;
+}
+.form{
+    @apply bg-white rounded-xl p-10 items-center mx-auto shadow-2xl w-1/2;
+}
+.header {
+    @apply flex justify-between items-center p-6;
 }
 
+.createButton {
+    @apply bg-[#FFA800] text-white px-4 py-2 rounded-sm flex items-center justify-between gap-2 text-sm;
+}
 .inputWrapper {
-  @apply mb-4;
+    @apply mb-4  ;
 }
 
 .input {
-  @apply w-1/4 bg-white rounded-sm px-3 py-2 text-sm outline-none ;
+    @apply w-full px-4 py-3  border border-[#DBDCDE] rounded-md text-sm outline-none;
+}
+.inputTextarea {
+    @apply w-full px-4 py-3 h-32 border border-[#DBDCDE] rounded-md text-sm outline-none;
 }
 
 .buttonGroup {

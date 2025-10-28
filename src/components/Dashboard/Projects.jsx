@@ -5,6 +5,8 @@ import CreateProjectForm from "./CreateProjectForm";
 import SearchBar from "./SearchBar";
 import EditProjectForm from "./EditProjectForm";
 function Projects() {
+      console.log("Dashboard Projects component rendered"); // Debug log
+
   const initialProjectsData = [
     {
       id: 1,

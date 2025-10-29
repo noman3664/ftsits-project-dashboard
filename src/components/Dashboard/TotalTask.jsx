@@ -95,41 +95,6 @@ const TotalTask = ({ title, bgColor }) => {
         </tbody>
       </table>
 
-      {/* <div className={styles.footer}>
-        <p className={styles.footerText}>
-          Showing {displayedSummary.length} of {summary.length} users
-        </p>
-
-        <div className={styles.pagination}>
-          <button
-            onClick={handlePrev}
-            disabled={currentPage === 1}
-            className={styles.pageBtnRed}
-          >
-            Previous
-          </button>
-
-          {[...Array(totalPages)].map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentPage(index + 1)}
-              className={`${styles.pageBtnYellow} ${
-                currentPage === index + 1 ? styles.activePage : ""
-              }`}
-            >
-              {index + 1}
-            </button>
-          ))}
-
-          <button
-            onClick={handleNext}
-            disabled={currentPage === totalPages}
-            className={styles.pageBtnRed}
-          >
-            Next
-          </button>
-        </div>
-      </div> */}
         <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

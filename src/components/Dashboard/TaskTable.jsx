@@ -88,27 +88,7 @@ const TaskTable = ({ title, bgColor }) => {
         </tbody>
       </table>
 
-      {/* Footer */}
-      {/* <div className={styles.footer}>
-        <p>
-          Showing {startIndex + 1} to{" "}
-          {Math.min(startIndex + showEntries, filteredTasks.length)} of{" "}
-          {filteredTasks.length} entries
-        </p>
-        <div className={styles.pagination}>
-          <button onClick={handlePrev} className={styles.pageBtnRed} disabled={currentPage === 1}>
-            Previous
-          </button>
-          <button className={styles.pageBtnYellow}>{currentPage}</button>
-          <button
-            onClick={handleNext}
-            className={styles.pageBtnRed}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
-      </div> */}
+      
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

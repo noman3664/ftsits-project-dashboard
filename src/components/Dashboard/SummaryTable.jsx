@@ -88,16 +88,6 @@ const SummaryTable = ({ title, bgColor }) => {
 
       </table>
 
-      {/* <div className={styles.footer}>
-        <p className={styles.footerText}>
-          Showing {summary.length} of {tasks.length} users
-        </p>
-        <div className={styles.pagination}>
-          <button className={styles.pageBtnRed}>Previous</button>
-          <button className={styles.pageBtnYellow}>1</button>
-          <button className={styles.pageBtnRed}>Next</button>
-        </div>
-      </div> */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

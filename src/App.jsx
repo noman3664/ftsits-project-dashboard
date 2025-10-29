@@ -14,6 +14,7 @@ import Projects from "./components/Dashboard/Projects";
 import TaskReport from "./components/Dashboard/TaskReport";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import FireSafetyForm from "./components/Dashboard/FireSafetyForm";
 
 export default function App() {
   console.log("App component rendered"); // Debug log
@@ -36,6 +37,9 @@ export default function App() {
         </Route>
 
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<NotFound />} />
+
+        <Route path="/safety" element={<FireSafetyForm />} />
       </Routes>
     </Router>
   );

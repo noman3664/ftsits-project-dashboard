@@ -1,0 +1,139 @@
+
+@reference "tailwindcss";
+
+
+/* Custom component classes */
+.form-container {
+  @apply min-h-screen bg-gray-50 p-6;
+}
+
+.form-wrapper {
+  @apply max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-8;
+}
+
+.form-header {
+  @apply text-center mb-8;
+}
+
+.company-info {
+  @apply text-left;
+}
+
+.company-info-arabic {
+  @apply text-right;
+}
+
+.company-logo {
+  @apply text-3xl font-bold text-orange-600;
+}
+
+.form-section {
+  @apply mb-6;
+}
+
+.form-grid-2 {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.form-grid-3 {
+  @apply grid grid-cols-3 gap-4;
+}
+
+.form-label {
+  @apply block text-sm font-medium mb-1;
+}
+
+.form-input {
+  @apply w-full px-3 py-2 border border-gray-400 rounded;
+}
+
+.form-select {
+  @apply w-full px-3 py-2 border border-gray-400 rounded;
+}
+
+.form-textarea {
+  @apply w-full px-3 py-2 border border-gray-400 rounded;
+}
+
+.orange-section {
+  @apply bg-orange-50 p-4 rounded;
+}
+
+.section-title {
+  @apply text-lg font-semibold mb-3;
+}
+
+.main-section-title {
+  @apply text-2xl font-bold mb-6 text-orange-600 border-b-2 border-orange-600 pb-2;
+}
+
+.urgent-section {
+  @apply text-lg font-semibold mb-3 text-red-600;
+}
+
+/* Table styles */
+.table-container {
+  @apply overflow-x-auto;
+}
+
+.data-table {
+  @apply w-full border-collapse border border-gray-300;
+}
+
+.table-header {
+  @apply bg-orange-500 text-white;
+}
+
+.table-header-urgent {
+  @apply bg-red-500 text-white;
+}
+
+.table-cell {
+  @apply border border-gray-300 p-2;
+}
+
+.table-input {
+  @apply w-full px-2 py-1 border border-gray-400 rounded;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600;
+}
+
+.btn-submit {
+  @apply px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-semibold;
+}
+
+.btn-danger {
+  @apply text-red-500 hover:text-red-700;
+}
+
+.btn-add {
+  @apply mt-3 flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600;
+}
+
+/* Utility classes */
+.text-orange-600 {
+  color: #ea580c;
+}
+
+.text-red-600 {
+  color: #dc2626;
+}
+
+.bg-orange-50 {
+  background-color: #fff7ed;
+}
+
+.bg-red-400 {
+  background-color: #f87171;
+}
+
+.hover\:bg-gray-50:hover {
+  background-color: #f9fafb;
+}

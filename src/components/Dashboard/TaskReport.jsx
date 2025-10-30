@@ -1,178 +1,238 @@
-import React, { useState } from "react";
-import { ClipboardList, Search } from "lucide-react";
-import styles from "./TaskReport.module.css"; 
+import React, { useState, useMemo } from "react";
+import { ClipboardList } from "lucide-react";
+import SearchBar from "../Dashboard/SearchBar";
+import Pagination from "../Dashboard/Pagination";
+import styles from "./TaskReport.module.css";
+import ReusableTable from "../Dashboard/Table";
 
 export default function TaskReport() {
-    const [filters, setFilters] = useState({
-        user: "",
-        project: "",
-        status: "",
-        priority: "",
-        from: "",
-        to: "",
+  const [filters, setFilters] = useState({
+    user: "",
+    project: "",
+    status: "",
+    priority: "",
+    from: "",
+    to: "",
+  });
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
+  const tasks = useMemo(
+    () => [
+      {
+        id: 1,
+        task: "Frontend Task 1",
+        assignee: "User1",
+        status: "Open",
+        priority: "Medium",
+        created: "2025-10-20",
+      },
+      {
+        id: 2,
+        task: "Backend Task 2",
+        assignee: "User2",
+        status: "In Progress",
+        priority: "High",
+        created: "2025-10-21",
+      },
+      {
+        id: 3,
+        task: "UI Update",
+        assignee: "User1",
+        status: "Closed",
+        priority: "Low",
+        created: "2025-10-22",
+      },
+    ],
+    []
+  );
+
+  /* -------------------- Filtering Logic -------------------- */
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task) => {
+      const matchesSearch =
+        !searchQuery ||
+        Object.values(task)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
+      const matchesUser = !filters.user || task.assignee.toLowerCase() === filters.user;
+      const matchesProject = !filters.project || task.task.toLowerCase().includes(filters.project);
+      const matchesStatus = !filters.status || task.status.toLowerCase() === filters.status;
+      const matchesPriority = !filters.priority || task.priority.toLowerCase() === filters.priority;
+      return matchesSearch && matchesUser && matchesProject && matchesStatus && matchesPriority;
     });
+  }, [tasks, filters, searchQuery]);
 
-    const [searchQuery, setSearchQuery] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
-    const [showEntries] = useState(10); // entries per page
+  /* -------------------- Pagination -------------------- */
+  const totalPages = Math.ceil(filteredTasks.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const displayedTasks = filteredTasks.slice(startIndex, startIndex + itemsPerPage);
 
-    const tasks = [
-        { id: 1, task: "Frontend Task 1", assignee: "User1", status: "Open", priority: "Medium", created: "20/10/25" },
-        { id: 2, task: "Backend Task 2", assignee: "User2", status: "In Progress", priority: "High", created: "21/10/25" },
-        { id: 3, task: "UI Update", assignee: "User1", status: "Closed", priority: "Low", created: "22/10/25" },
-        // Add more tasks to test pagination
-    ];
+  /* -------------------- Columns Setup -------------------- */
+  const columns = [
+    { key: "task", label: "Task" },
+    { key: "assignee", label: "Assignee" },
+    {
+      key: "status",
+      label: "Status",
+      render: (task) => (
+        <span
+          className={
+            task.status === "Open"
+              ? styles.statusOpen
+              : task.status === "Closed"
+              ? styles.statusClosed
+              : styles.statusProgress
+          }
+        >
+          {task.status}
+        </span>
+      ),
+    },
+    {
+      key: "priority",
+      label: "Priority",
+      render: (task) => (
+        <span
+          className={
+            task.priority === "High"
+              ? styles.priorityHigh
+              : task.priority === "Medium"
+              ? styles.priorityMedium
+              : styles.priorityLow
+          }
+        >
+          {task.priority}
+        </span>
+      ),
+    },
+    { key: "created", label: "Created" },
+  ];
 
-    // Search & filter logic
-    const filteredTasks = tasks.filter((task) =>
-        task.task.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  /* -------------------- Handlers -------------------- */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({ ...prev, [name]: value }));
+  };
 
-    // Pagination logic
-    const totalPages = Math.ceil(filteredTasks.length / showEntries);
-    const startIndex = (currentPage - 1) * showEntries;
-    const paginatedTasks = filteredTasks.slice(startIndex, startIndex + showEntries);
+  const handleFilter = () => console.log("Filters applied:", filters);
+  const handleExport = () => console.log("Exporting CSV...");
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFilters((prev) => ({ ...prev, [name]: value }));
-    };
+  return (
+    <div className={styles.taskReport}>
+      {/* Header */}
+      <div className={styles.header}>
+        <button className={styles.headerBtn}>
+          <ClipboardList size={16} />
+          Task Report
+        </button>
+      </div>
 
-    const handleFilter = () => console.log("Filters applied:", filters);
-    const handleExport = () => console.log("Exporting CSV...");
-
-    return (
-        <div className={styles.taskReport}>
-            {/* Filter Section */}
-            <div className={styles.filterSection}>
-                <div className={styles.header}>
-                    <button className={styles.headerBtn}>
-                        <ClipboardList size={16} />
-                        Task Report
-                    </button>
-                </div>
-
-                {/* Filters */}
-                <div className={styles.grid4}>
-                    <FilterSelect label="User" name="user" value={filters.user} onChange={handleChange} options={["User1", "User2"]} />
-                    <FilterSelect label="Project" name="project" value={filters.project} onChange={handleChange} options={["Frontend", "Backend"]} />
-                    <FilterSelect label="Status" name="status" value={filters.status} onChange={handleChange} options={["Open", "In Progress", "Closed"]} />
-                    <FilterSelect label="Priority" name="priority" value={filters.priority} onChange={handleChange} options={["Low", "Medium", "High"]} />
-                    <FilterInput name="from" type="date" value={filters.from} onChange={handleChange} />
-                    <FilterInput name="to" type="date" value={filters.to} onChange={handleChange} />
-                </div>
-
-                <div className={styles.btnRow}>
-                    <button onClick={handleFilter} className={styles.btnPrimary}>Filter</button>
-                    <button onClick={handleExport} className={styles.btnSecondary}>Export CSV</button>
-                </div>
-            </div>
-
-            {/* Table Section */}
-            <div className={styles.tableWrapper}>
-                <div className={styles.controlsBar}>
-                    <span className={styles.showLabel}>Frontend</span>
-
-                    <div className={styles.searchBar}>
-                        <input
-                            type="text"
-                            placeholder="Search anything here..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className={styles.searchInput}
-                        />
-                        <Search size={18} className={styles.searchIcon} />
-                    </div>
-                </div>
-
-                {/* Table */}
-                <div className="overflow-x-auto">
-                    <table className={styles.table}>
-                        <thead className={styles.tableHead}>
-                            <tr>
-                                {["Task", "Assignee", "Status", "Priority", "Created"].map((heading) => (
-                                    <th key={heading} className={styles.tableTh}>{heading}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedTasks.length > 0 ? (
-                                paginatedTasks.map((task) => (
-                                    <tr key={task.id} className={styles.tableRow}>
-                                        <td className={styles.tableTdTitle}>{task.task}</td>
-                                        <td className={styles.tableTd}>{task.assignee}</td>
-                                        <td className={styles.tableTd}>
-                                            <span className={styles.statusOpen}>{task.status}</span>
-                                        </td>
-                                        <td className={styles.tableTd}>
-                                            <span className={styles.priorityMedium}>{task.priority}</span>
-                                        </td>
-                                        <td className={styles.tableTd}>{task.created}</td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="5" className={styles.noData}>No tasks found</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-
-                {/* Footer / Pagination */}
-                <div className={styles.footer}>
-                    <span className={styles.footerText}>
-                        Showing {filteredTasks.length === 0 ? 0 : startIndex + 1} to{" "}
-                        {Math.min(startIndex + showEntries, filteredTasks.length)} of{" "}
-                        {filteredTasks.length} entries
-                    </span>
-
-                    <div className={styles.pagination}>
-                        <button
-                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
-                            className={currentPage === 1 ? styles.pageButtonDisabled : styles.prevButton}
-                        >
-                            Previous
-                        </button>
-
-                        <span className={styles.activePage}>{currentPage}</span>
-
-                        <button
-                            onClick={() => setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev))}
-                            disabled={currentPage === totalPages}
-                            className={currentPage === totalPages ? styles.pageButtonDisabled : styles.nextButton}
-                        >
-                            Next
-                        </button>
-                    </div>
-                </div>
-            </div>
+      {/* Filter Section */}
+      <div className={styles.filterSection}>
+        <div className={styles.grid4}>
+          <FilterSelect
+            label="User"
+            name="user"
+            value={filters.user}
+            onChange={handleChange}
+            options={["User1", "User2"]}
+          />
+          <FilterSelect
+            label="Project"
+            name="project"
+            value={filters.project}
+            onChange={handleChange}
+            options={["Frontend", "Backend"]}
+          />
+          <FilterSelect
+            label="Status"
+            name="status"
+            value={filters.status}
+            onChange={handleChange}
+            options={["Open", "In Progress", "Closed"]}
+          />
+          <FilterSelect
+            label="Priority"
+            name="priority"
+            value={filters.priority}
+            onChange={handleChange}
+            options={["Low", "Medium", "High"]}
+          />
+          <FilterInput name="from" type="date" value={filters.from} onChange={handleChange} />
+          <FilterInput name="to" type="date" value={filters.to} onChange={handleChange} />
         </div>
-    );
+
+        <div className={styles.btnRow}>
+          <button onClick={handleFilter} className={styles.btnPrimary}>
+            Filter
+          </button>
+          <button onClick={handleExport} className={styles.btnSecondary}>
+            Export CSV
+          </button>
+        </div>
+      </div>
+
+      {/* Table Section */}
+      <div className={styles.tableWrapper}>
+        <div className={styles.controlsBar}>
+          <span className={styles.showLabel}>All Tasks</span>
+
+          {/* 🔍 Reusable Search */}
+          <div className={styles.searchContainer}>
+            <SearchBar
+              data={tasks}
+              searchKeys={["task", "assignee", "status", "priority"]}
+              setFilteredData={() => {}}
+              placeholder="Search anything here..."
+              onSearch={(query) => setSearchQuery(query)}
+            />
+          </div>
+        </div>
+
+        <ReusableTable
+          data={displayedTasks}
+          columns={columns}
+          startIndex={startIndex}
+          emptyMessage="No tasks found."
+          showIndex={false}
+        />
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            totalItems={filteredTasks.length}
+            displayedItems={itemsPerPage}
+          />
+      </div>
+    </div>
+  );
 }
 
-/* ----------------- Subcomponents ----------------- */
 function FilterSelect({ label, name, value, onChange, options }) {
-    return (
-        <div>
-            <select name={name} value={value} onChange={onChange} className={styles.input}>
-                <option value="">{label || "Select"}</option>
-                {options.map((opt) => (
-                    <option key={opt} value={opt.toLowerCase()}>
-                        {opt}
-                    </option>
-                ))}
-            </select>
-        </div>
-    );
+  return (
+    <div>
+      <select name={name} value={value} onChange={onChange} className={styles.input}>
+        <option value="">{label}</option>
+        {options.map((opt) => (
+          <option key={opt} value={opt.toLowerCase()}>
+            {opt}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 }
 
 function FilterInput({ label, name, value, onChange, type = "text" }) {
-    return (
-        <div>
-            {label && <label className={styles.label}>{label}</label>}
-            <input type={type} name={name} value={value} onChange={onChange} className={styles.input} />
-        </div>
-    );
+  return (
+    <div>
+      {label && <label className={styles.label}>{label}</label>}
+      <input type={type} name={name} value={value} onChange={onChange} className={styles.input} />
+    </div>
+  );
 }

@@ -54,7 +54,7 @@
 }
 
 .table {
-  @apply w-full text-left border-collapse;
+  @apply w-full text-left border-collapse table-fixed;
 }
 
 .tableHead {

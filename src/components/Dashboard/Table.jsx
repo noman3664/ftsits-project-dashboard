@@ -1,110 +1,81 @@
-// Table.jsx
-import React, { useState, useMemo } from "react";
-import SearchBar from "./SearchBar";
-import Pagination from "./Pagination";
-import styles from "./Table.module.css";
+import React from "react";
+import styles from "./table.module.css";
 
-const Table = ({
-  title,
-  bgColor,
-  data,
-  columns,
-  searchKeys = [],
-  itemsPerPage = 5,
-  showSearch = true,
-  showPagination = true,
+const ReusableTable = ({
+    data = [],
+    columns = [],
+    startIndex = 0,
+    onAction = null,
+    actionLabel = "View",
+    emptyMessage = "No data found",
+    showIndex = true,
 }) => {
-  const [filteredData, setFilteredData] = useState(data);
-  const [currentPage, setCurrentPage] = useState(1);
+    const renderCellContent = (item, column) => {
+        if (column.render) return column.render(item);
+        return item[column.key];
+    };
 
-  // Pagination calculations
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  
-  const displayedData = useMemo(
-    () => filteredData.slice(startIndex, startIndex + itemsPerPage),
-    [filteredData, startIndex, itemsPerPage]
-  );
+    return (
+        <table className={styles.table}>
+            <thead className={styles.thead}>
+                <tr>
+                    {showIndex && <th>#</th>} {/*  Only show if enabled */}
+                    {columns.map((col) => (
+                        <th
+                            key={col.key}
+                            className={`${styles.th} ${col.headerClassName || ""}`}
+                        >
+                            {col.label}
+                        </th>
 
-  // Reset to first page when data changes
-  React.useEffect(() => {
-    setCurrentPage(1);
-  }, [filteredData]);
+                    ))}
+                    {onAction && <th>Action</th>}
+                </tr>
+            </thead>
 
-  return (
-    <div className={styles.wrapper}>
-      {/* Header */}
-      <div className={`${styles.header} ${bgColor}`}>
-        <h2 className={styles.title}>{title}</h2>
-        {showSearch && searchKeys.length > 0 && (
-          <SearchBar
-            data={data}
-            setFilteredData={setFilteredData}
-            searchKeys={searchKeys}
-          />
-        )}
-      </div>
+            <tbody>
+                {data.length > 0 ? (
+                    data.map((item, index) => (
+                        <tr key={item.id || index} className={styles.row}>
+                            {showIndex && <td>{startIndex + index + 1}</td>} {/*  Conditional index */}
+                            {columns.map((col) => (
+                                <td
+                                    key={col.key}
+                                    className={`${styles.td} ${col.className ? col.className(item) : ""}`}
+                                >
+                                    {renderCellContent(item, col)}
+                                </td>
 
-      {/* Table */}
-      <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr>
-            {columns.map((column) => (
-              <th 
-                key={column.key} 
-                className={column.className || styles.th}
-                style={column.style}
-              >
-                {column.title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {displayedData.length > 0 ? (
-            displayedData.map((row, index) => (
-              <tr 
-                key={row.id || index} 
-                className={index % 2 === 0 ? styles.rowEven : styles.rowOdd}
-              >
-                {columns.map((column) => {
-                  const cellContent = column.render 
-                    ? column.render(row, startIndex + index) 
-                    : row[column.key];
-                  
-                  return (
-                    <td 
-                      key={column.key}
-                      className={`${styles.td} ${column.cellClassName || ''}`}
-                    >
-                      {cellContent}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={columns.length} className={styles.noData}>
-                No data found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
-      {/* Pagination */}
-      {showPagination && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-          totalItems={filteredData.length}
-          displayedItems={displayedData.length}
-        />
-      )}
-    </div>
-  );
+                            ))}
+                            {onAction && (
+                                <td>
+                                    <button
+                                        className={styles.viewBtn}
+                                        onClick={() => onAction(item)}
+                                    >
+                                        {actionLabel}
+                                    </button>
+                                </td>
+                            )}
+                        </tr>
+                    ))
+                ) : (
+                    <tr>
+                        <td
+                            colSpan={
+                                columns.length +
+                                (onAction ? 1 : 0) +
+                                (showIndex ? 1 : 0) /*  adjusted colspan */
+                            }
+                            className={styles.noData}
+                        >
+                            {emptyMessage}
+                        </td>
+                    </tr>
+                )}
+            </tbody>
+        </table>
+    );
 };
 
-export default Table;
+export default ReusableTable;

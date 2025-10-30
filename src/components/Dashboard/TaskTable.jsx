@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
+import ReusableTable from "./Table";
 import styles from "./TaskTable.module.css";
 
 const TaskTable = ({ title, bgColor }) => {
@@ -11,28 +12,58 @@ const TaskTable = ({ title, bgColor }) => {
     { id: 4, title: "Testing", status: "Open", date: "2025/09/30", project: "QA", assignedTo: "User4" },
     { id: 5, title: "Bug Fix", status: "Closed", date: "2025/10/01", project: "Backend", assignedTo: "User2" },
     { id: 6, title: "Feature Development", status: "Open", date: "2025/10/05", project: "Frontend", assignedTo: "User5" },
-    { id: 7, title: "Code Review", status: "In Progress", date: "2025/10/03", project: "QA", assignedTo: "User5" }
+    { id: 7, title: "Code Review", status: "In Progress", date: "2025/10/03", project: "QA", assignedTo: "User5" },
   ];
 
   const [filteredTasks, setFilteredTasks] = useState(tasks);
   const [currentPage, setCurrentPage] = useState(1);
-  const [showEntries] = useState(5);
+  const showEntries = 5;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filteredTasks]);
 
   const totalPages = Math.ceil(filteredTasks.length / showEntries);
-  const startIndex = (currentPage - 1) * showEntries;
-  const displayedTasks = useMemo(
-    () => filteredTasks.slice(startIndex, startIndex + showEntries),
-    [filteredTasks, startIndex, showEntries]
-  );
 
-  // const handlePrev = () => setCurrentPage((p) => Math.max(p - 1, 1));
-  // const handleNext = () => setCurrentPage((p) => Math.min(p + 1, totalPages));
+  const displayedTasks = useMemo(() => {
+    const startIndex = (currentPage - 1) * showEntries;
+    return filteredTasks.slice(startIndex, startIndex + showEntries);
+  }, [filteredTasks, currentPage, showEntries]);
+
+  const columns = [
+    { key: "title", label: "Title", headerClassName: styles.th },
+    {
+      key: "status",
+      label: "Status",
+      headerClassName: styles.th,
+      className: (item) => {
+        const baseClass = styles.td;
+        if (item.status === "Open") return `${baseClass} ${styles.statusOpen}`;
+        if (item.status === "Closed") return `${baseClass} ${styles.statusClosed}`;
+        return `${baseClass} ${styles.statusProgress}`;
+      },
+    },
+    { key: "date", label: "Date", headerClassName: styles.th },
+    { key: "project", label: "Project", headerClassName: styles.th },
+    { key: "assignedTo", label: "Assigned To", headerClassName: styles.th },
+  ];
+
+  const handleViewTask = (task) => {
+    console.log("Viewing task:", task);
+  };
 
   return (
     <div className={styles.wrapper}>
-      {/* Header */}
+      {/* Header and Search */}
       <div className={`${styles.header} ${bgColor}`}>
         <h2 className={styles.title}>{title}</h2>
+      </div>
+      {/* Entries Info */}
+      <div className={styles.controlsBar}>
+        <div className={styles.showEntries}>
+          <span className={styles.showButton}>Show Entries:</span>
+          <span className={styles.entriesCount}>{filteredTasks.length}</span>
+        </div>
         <SearchBar
           data={tasks}
           setFilteredData={setFilteredTasks}
@@ -40,62 +71,27 @@ const TaskTable = ({ title, bgColor }) => {
         />
       </div>
 
-      {/* Table */}
-      <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Status</th>
-            <th>Date</th>
-            <th>Project</th>
-            <th>Assigned To</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {displayedTasks.length > 0 ? (
-            displayedTasks.map((task, index) => (
-              <tr key={task.id} className={styles.row}>
-                <td>{startIndex + index + 1}</td>
-                <td>{task.title}</td>
-                <td
-                  className={`${styles.td} ${
-                    task.status === "Open"
-                      ? styles.statusOpen
-                      : task.status === "Closed"
-                      ? styles.statusClosed
-                      : styles.statusProgress
-                  }`}
-                >
-                  {task.status}
-                </td>
-                <td>{task.date}</td>
-                <td>{task.project}</td>
-                <td>{task.assignedTo}</td>
-                <td>
-                  <button className={styles.viewBtn}>View</button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="7" className={styles.noData}>
-                No tasks found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
 
-      
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-        totalItems={filteredTasks.length}
-        displayedItems={displayedTasks.length}
+
+      {/* Reusable Table */}
+      <ReusableTable
+        data={displayedTasks}
+        columns={columns}
+        onAction={handleViewTask}
+        actionLabel="View"
+        emptyMessage="No tasks found"
       />
+
+      {/* Pagination */}
+      {filteredTasks.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+          totalItems={filteredTasks.length}
+          displayedItems={displayedTasks.length}
+        />
+      )}
     </div>
   );
 };

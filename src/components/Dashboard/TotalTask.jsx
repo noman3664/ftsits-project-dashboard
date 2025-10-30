@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
-import styles from "./SummaryTable.module.css";
+import ReusableTable from "./Table";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
+import styles from "./SummaryTable.module.css";
 
 const TotalTask = ({ title, bgColor }) => {
   const sampleTasks = [
@@ -35,7 +36,7 @@ const TotalTask = ({ title, bgColor }) => {
     }));
 
     setSummary(summaryArr);
-    setCurrentPage(1); // Reset pagination on search/filter change
+    setCurrentPage(1);
   }, [filteredTasks]);
 
   const totalPages = Math.ceil(summary.length / showEntries);
@@ -46,19 +47,27 @@ const TotalTask = ({ title, bgColor }) => {
     [summary, startIndex, showEntries]
   );
 
-//   const handlePrev = () => {
-//     if (currentPage > 1) setCurrentPage((prev) => prev - 1);
-//   };
+  const columns = [
+    { key: "user", label: "Name", headerClassName: styles.th },
+    { key: "total", label: "Number of Tasks", headerClassName: styles.th }
+  ];
 
-//   const handleNext = () => {
-//     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
-//   };
+  const getRowClassName = (_, index) => {
+    return index % 2 === 0 ? styles.rowEven : styles.rowOdd;
+  };
 
   return (
     <div className={styles.wrapper}>
       <div className={`${styles.header} ${bgColor}`}>
         <h2 className={styles.title}>{title}</h2>
+      </div>
 
+      {/* Entries Info */}
+      <div className={styles.controlsBar}>
+        <div className={styles.showEntries}>
+          <span className={styles.showButton}>Show Entries:</span>
+          <span className={styles.entriesCount}>{filteredTasks.length}</span>
+        </div>
         <SearchBar
           data={tasks}
           setFilteredData={setFilteredTasks}
@@ -66,36 +75,15 @@ const TotalTask = ({ title, bgColor }) => {
         />
       </div>
 
-      <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr>
-            <th className={styles.th}>Name</th>
-            <th className={styles.th}>Number of Tasks</th>
-          </tr>
-        </thead>
+      <ReusableTable
+        data={displayedSummary}
+        columns={columns}
+        showIndex={false}
+        rowClassName={getRowClassName}
+        emptyMessage="No results found"
+      />
 
-        <tbody className={styles.tbody}>
-          {displayedSummary.length > 0 ? (
-            displayedSummary.map((item, i) => (
-              <tr
-                key={i}
-                className={i % 2 === 0 ? styles.rowEven : styles.rowOdd}
-              >
-                <td className={styles.td}>{item.user}</td>
-                <td className={styles.td}>{item.total}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="2" className={styles.noData}>
-                No results found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
-        <Pagination
+      <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}

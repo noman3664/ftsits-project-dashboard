@@ -21,24 +21,41 @@
 .searchInput {
   @apply w-full px-2 text-sm outline-none bg-transparent;
 }
+.controlsBar {
+  @apply bg-[#FFD2CE] flex justify-between items-center p-4;
+}
+.showEntries {
+  @apply flex items-center;
+}
+
+.showButton {
+  @apply bg-[#F93131] text-white text-sm px-3 py-2 border-0;
+}
+
+
+.entriesCount {
+  @apply bg-[#FFA800] text-white text-sm px-3 py-2 border-0 outline-none cursor-pointer;
+}
 
 .table {
-  @apply w-full text-sm border-t border-gray-200 table-fixed;
+  @apply w-full text-sm table-fixed;
 }
 
 .thead {
   @apply bg-[#FFD2CE] text-[#3A3541] px-4 py-3 text-center;
-;
+
 }
 
 .th {
+  @apply py-3 px-4;
 }
 
 .td {
-  @apply py-3 px-4 border-b border-gray-200 align-middle ;
+  @apply py-3 px-4 border-b border-gray-200 text-center;
 }
+
 .row {
-  @apply text-center py-2;
+  @apply text-center py- ;
 }
 
 
@@ -78,6 +95,7 @@
 .pageBtnYellow {
   @apply bg-[#FFA800] text-white px-3;
 }
+
 .noData {
   @apply text-center text-gray-500 py-4;
 }

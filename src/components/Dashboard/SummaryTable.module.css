@@ -22,10 +22,26 @@
 .searchInput {
   @apply w-full px-2 text-sm outline-none bg-transparent;
 }
+.controlsBar {
+  @apply bg-[#FFD2CE] flex justify-between items-center p-4;
+}
+.showEntries {
+  @apply flex items-center;
+}
+
+.showButton {
+  @apply bg-[#F93131] text-white text-sm px-3 py-2 border-0;
+}
+
+
+.entriesCount {
+  @apply bg-[#FFA800] text-white text-sm px-3 py-2 border-0 outline-none cursor-pointer;
+}
+
 
 /* Table */
 .table {
-  @apply w-full text-sm border-collapse;
+  @apply w-full text-sm table-fixed;
 }
 
 .thead {
@@ -39,6 +55,10 @@
 .tbody {
   @apply text-center;
 }
+.td
+  {
+    @apply py-3 px-4;
+  }
 
 .rowEven {
   @apply bg-[#F6EFFF];

@@ -51,7 +51,7 @@ export default function Navbar({toggleSidebar}) {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userData");
     navigate("/login");
-    
+    location.reload();  
   }
 
   return (

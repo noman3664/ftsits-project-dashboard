@@ -55,7 +55,7 @@
 }
 
 .row {
-  @apply text-center py- ;
+  @apply text-center py-2; ;
 }
 
 

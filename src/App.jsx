@@ -15,17 +15,26 @@ import TaskReport from "./components/Dashboard/TaskReport";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import FireSafetyForm from "./components/Dashboard/FireSafetyForm";
-
+import ProtectedRoute from "./components/Dashboard/ProtectedRoutes";
 export default function App() {
-  console.log("App component rendered"); // Debug log
+  console.log("App component rendered");
 
   return (
     <Router>
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
 
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        {/* Protected Dashboard Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="roles" element={<Roles />} />
           <Route path="permissions" element={<Permissions />} />
@@ -33,13 +42,20 @@ export default function App() {
           <Route path="projects" element={<Projects />} />
           <Route path="task-report" element={<TaskReport />} />
           <Route path="users" element={<div>Users Component</div>} />
-          <Route path="*" element={<NotFound />} />
         </Route>
 
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        <Route path="*" element={<NotFound />} />
+        {/* Standalone Protected Route */}
+        <Route
+          path="/safety"
+          element={
+            <ProtectedRoute>
+              <FireSafetyForm />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/safety" element={<FireSafetyForm />} />
+        {/* 404 - Must be last */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

@@ -1,6 +1,7 @@
 import { FaSearch,FaBars, FaChevronDown, FaUserEdit, FaPlusCircle, FaTasks, FaClipboardList, FaClock, FaSignOutAlt, FaChartBar } from "react-icons/fa";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect  } from "react";
 import SearchBar from "../Dashboard/SearchBar";
+import { useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
 export default function Navbar({toggleSidebar}) {
@@ -8,6 +9,7 @@ export default function Navbar({toggleSidebar}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -46,7 +48,10 @@ export default function Navbar({toggleSidebar}) {
     // Add your logout logic here
     // Use localStorage (or sessionStorage) instead of undefined userStorage
     localStorage.clear();
-    window.location.href = "/";
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userData");
+    navigate("/login");
+    
   }
 
   return (

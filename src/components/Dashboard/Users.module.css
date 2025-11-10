@@ -1,6 +1,4 @@
-/* Permissions.module.css */
 @reference "tailwindcss";
-
 .permissionsContainer {
   @apply w-full min-h-screen bg-gray-50 overflow-y-auto;
 }

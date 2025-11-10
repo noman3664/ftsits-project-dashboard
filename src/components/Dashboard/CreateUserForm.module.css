@@ -1,0 +1,43 @@
+@reference "tailwindcss";
+
+.header {
+  @apply bg-[#FFD2CE] p-4;
+}
+
+.backButton {
+  @apply bg-[#FFA800] text-white px-4 py-2 rounded-sm text-sm flex items-center gap-2 border-none cursor-pointer hover:opacity-90;
+}
+.content {
+  @apply bg-white shadow-sm overflow-y-auto;
+}
+.formWrapper {
+  @apply p-6 m-4 bg-white rounded-lg shadow-sm;
+}
+.topHeader {
+  @apply text-2xl font-bold text-[#3A3541] mb-6;
+}
+.form{
+  @apply grid gap-4;
+}
+.inputGroup {
+  @apply flex flex-col;
+}
+.inputLabel {
+  @apply font-semibold text-[#3A3541] mb-2 text-sm;
+}
+.inputField {
+  @apply border border-gray-300 rounded px-4 py-2 text-sm outline-none transition-all;
+}
+.inputField:focus {
+  @apply ring-2 ring-blue-500 border-blue-500;
+}
+.buttonGroup {
+  @apply flex gap-3 mt-6;
+}
+.saveButton {
+  @apply bg-[#FFA800] text-white px-4 py-2 rounded-sm text-sm flex items-center gap-2 border-none cursor-pointer hover:opacity-90;
+}
+.cancelButton {
+  @apply bg-[#6c757d] text-white px-4 py-2 rounded-sm text-sm border-none cursor-pointer hover:opacity-90;
+}
+

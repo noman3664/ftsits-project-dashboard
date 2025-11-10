@@ -10,7 +10,7 @@ function CreateTaskForm({ onClose, onSave }) {
     priority: "",
     assignTo: "",
     description: "",
-    files: [], // ✅ store multiple files here
+    files: [], //  store multiple files here
   });
 
   const handleChange = (e) => {

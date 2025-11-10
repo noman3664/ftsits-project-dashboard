@@ -115,7 +115,6 @@ function Roles() {
             />
           </div>
 
-          {/* ✅ Using ReusableTable */}
           <ReusableTable
             data={displayedRoles}
             columns={columns}

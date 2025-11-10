@@ -1,15 +1,17 @@
-import { FaSearch,FaBars, FaChevronDown, FaUserEdit, FaPlusCircle, FaTasks, FaClipboardList, FaClock, FaSignOutAlt, FaChartBar } from "react-icons/fa";
-import { useState, useRef, useEffect  } from "react";
+import { FaSearch, FaBars, FaChevronDown, FaUserEdit, FaPlusCircle, FaTasks, FaClipboardList, FaClock, FaSignOutAlt, FaChartBar } from "react-icons/fa";
+import { useState, useRef, useEffect } from "react";
 import SearchBar from "../Dashboard/SearchBar";
 import { useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
-export default function Navbar({toggleSidebar}) {
-  
+export default function Navbar({ toggleSidebar }) {
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const [user, setUser] = useState({ name: "", role: "", image: "" });
+
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -19,22 +21,61 @@ export default function Navbar({toggleSidebar}) {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) setUser(storedUser);
+
+    //  Update user in Navbar when profile changes in another tab or page
+    const handleStorageChange = (event) => {
+      if (event.key === "user") {
+        const updatedUser = JSON.parse(event.newValue);
+        setUser(updatedUser || { name: "", role: "", image: "" });
+      }
+
+
+      const handleUserUpdate = (event) => {
+        setUser(event.detail);
+      };
+
+      window.addEventListener('userUpdated', handleUserUpdate);
+      return () => window.removeEventListener('userUpdated', handleUserUpdate);
     };
+    window.addEventListener("storage", handleStorageChange);
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
   const handleMenuItemClick = (action) => {
-    console.log(`Clicked: ${action}`);
-    // Add your navigation logic here
     setActiveItem(action);
     setIsDropdownOpen(false);
+
+    switch (action) {
+      case "Edit Profile":
+        navigate("edit-profile");
+        location.reload();
+        break;
+      case "Add Project":
+        navigate("projects");
+        break;
+      case "New Tasks":
+        navigate("tasks");
+        break;
+      case "Daily Log Report":
+        navigate("task-report");
+        break;
+      case "Daily Logs":
+        navigate("/logs");
+        break;
+      default:
+        break;
+    }
   };
+
+
   const menuItems = [
     { label: "Edit Profile", icon: <FaUserEdit /> },
     { label: "Add Project", icon: <FaPlusCircle /> },
@@ -44,15 +85,11 @@ export default function Navbar({toggleSidebar}) {
     { label: "Clock In", icon: <FaClock /> },
   ];
   const handleLogout = () => {
-    console.log("Logging out...");
-    // Add your logout logic here
-    // Use localStorage (or sessionStorage) instead of undefined userStorage
     localStorage.clear();
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userData");
     navigate("/login");
-    location.reload();  
-  }
+    location.reload();
+  };
+
 
   return (
     <div className={styles.navbar}>
@@ -61,7 +98,7 @@ export default function Navbar({toggleSidebar}) {
       </button>
       <h1 className={styles.title}>Dashboard</h1>
 
-        <SearchBar />
+      <SearchBar />
       {/* <div className={styles.searchWrapper}>
         <input
           type="text"
@@ -71,20 +108,22 @@ export default function Navbar({toggleSidebar}) {
         <FaSearch className={styles.searchIcon} />
       </div> */}
 
-      <div 
-        className={styles.profileSection} 
+      <div
+        className={styles.profileSection}
         ref={dropdownRef}
       >
+
         <img
-          src="/profile.jpg"
+          src={user.image || "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
           alt="Profile"
           className={styles.profileImage}
         />
         <div className={styles.profileInfo}>
-          <p className={styles.profileName}>Gustavo Xavier</p>
-          <span className={styles.badge}>Admin</span>
+          <p className={styles.profileName}>{user.name || "Guest User"}</p>
+          <span className={styles.badge}>{user.role || "User"}</span>
         </div>
-        <FaChevronDown 
+
+        <FaChevronDown
           className={`${styles.dropdownIcon} ${isDropdownOpen ? styles.rotate : ""}`}
           onClick={toggleDropdown}
         />
@@ -103,7 +142,7 @@ export default function Navbar({toggleSidebar}) {
               </div>
             ))}
             <hr className={styles.divider} />
-            <div 
+            <div
               className={`${styles.dropdownItem} ${styles.logout}`} onClick={handleLogout} >
               <span className={styles.menuIcon}><FaSignOutAlt /></span>
               Logout

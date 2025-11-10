@@ -1,0 +1,89 @@
+@reference "tailwindcss";
+
+.container {
+    @apply min-h-screen bg-[#F7F8FB] py-8 px-4;
+}
+
+.wrapper {
+    @apply max-w-4xl mx-auto;
+}
+
+.card {
+    @apply bg-white rounded-lg shadow-lg p-6 mb-6;
+}
+
+.cardHeader {
+    @apply text-3xl font-bold text-gray-800;
+}
+
+.cardSubtext {
+    @apply text-gray-600 mt-1;
+}
+
+.imageWrapper {
+    @apply relative;
+}
+
+.profileImage {
+    @apply w-32 h-32 rounded-full object-cover border-4 border-[#F93131] shadow-lg;
+}
+
+.cameraLabel {
+    @apply absolute bottom-0 right-0 bg-[#F93131] text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition-colors shadow-lg;
+}
+
+.userName {
+    @apply text-2xl font-bold text-gray-800;
+}
+
+.tabContainer {
+    @apply flex border-b;
+}
+
+.tabButton {
+    @apply flex-1 py-4 px-6 font-medium transition-colors text-gray-600 hover:bg-gray-50;
+}
+
+.tabActive {
+    @apply text-[#F93131] border-b-2 border-[#F93131] bg-blue-50;
+}
+
+.tabContent {
+    @apply p-6;
+}
+
+.inputGroup {
+    @apply flex flex-col gap-2;
+}
+
+.label {
+    @apply text-sm font-medium text-gray-700 flex items-center gap-2;
+}
+
+.input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F93131] focus:border-transparent pr-12;
+}
+
+.eyeButton {
+    @apply absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700;
+}
+
+.buttonRow {
+    @apply flex gap-4 pt-4;
+}
+
+.saveButton {
+    @apply flex-1 py-3 px-6 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-colors shadow-md;
+}
+
+.cancelButton {
+    @apply px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors;
+}
+
+.updateButton {
+    @apply flex-1 py-3 px-6 bg-[#F93131] text-white font-medium rounded-lg shadow-md;
+}
+
+.infoBox {
+    @apply bg-blue-50 border border-blue-200 rounded-lg p-4;
+}

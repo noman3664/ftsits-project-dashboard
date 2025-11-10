@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../components/Layout/Sidebar";
 import Navbar from "../components/Layout/Navbar";
-import "./Dashboard.css";
+import "./Dashboard.css"
+import { Outlet } from "react-router-dom";
+
 
 export default function DashboardLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -10,7 +11,6 @@ export default function DashboardLayout() {
     setIsSidebarOpen(!isSidebarOpen);
     window.pathname.reload()
   };
-  const location = useLocation();
 
   return (
     <div className="dashboard-wrapper">
@@ -26,7 +26,7 @@ export default function DashboardLayout() {
       <div className="dashboard-main">
         <Navbar toggleSidebar={toggleSidebar} />
 
-        <main className="dashboard-content" key={location.pathname}>
+        <main className="dashboard-content" >
           <Outlet />
         </main>
       </div>

@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import FireSafetyForm from "./components/Dashboard/FireSafetyForm";
 import ProtectedRoute from "./components/Dashboard/ProtectedRoutes";
+import EditProfile from "./pages/EditProfile";
 export default function App() {
   console.log("App component rendered");
 
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="projects" element={<Projects />} />
           <Route path="task-report" element={<TaskReport />} />
           <Route path="users" element={<div>Users Component</div>} />
+          <Route path="edit-profile" element={<EditProfile />} />
         </Route>
 
         {/* Standalone Protected Route */}

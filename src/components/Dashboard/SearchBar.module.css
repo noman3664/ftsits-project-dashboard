@@ -11,3 +11,14 @@
 .searchIcon {
   @apply absolute right-3 text-[#89868D];
 }
+.searchDropdown {
+  @apply absolute bg-white border border-[#ddd] rounded-lg mt-1 shadow-lg z-50;
+}
+
+.searchItem {
+  @apply px-3 py-2 text-sm text-gray-800 cursor-pointer hover:bg-gray-100;
+}
+
+.searchItem:hover {
+  @apply bg-gray-100;
+}
